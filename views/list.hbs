@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Логины и пароли</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <h1>Список логинов и паролей</h1>
+    <table>
+        <tr><th>Логин</th><th>Пароль</th></tr>
+        {{#each logins}}
+            <tr>
+                <td>{{this.login}}</td>
+                <td>{{this.password}}</td>
+            </tr>
+        {{/each}}
+    </table>
+</body>
+<html>

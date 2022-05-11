@@ -1,0 +1,15 @@
+<nav>
+  <ul>
+    <li><a href="/home">Домашная страница</a></li>
+    <li>
+      <script>
+      let date = new Date();
+      let year = date.getFullYear();
+      let month = date.getMonth()+1;
+      var loc = "/lessons/lessons/"+year + "-"+month;
+      document.write('<a href="' + loc + '">Учебный планчик</a>');
+      </script>
+    </li>
+    <li><a href="/classes">Группы</a></li>
+  </ul>
+</nav>

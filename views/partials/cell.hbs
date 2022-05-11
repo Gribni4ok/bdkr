@@ -1,0 +1,14 @@
+<div class="cell">
+<div>{{data.0.lessondateof}}</div>
+{{#if data.0.themename}}
+{{#each data}}
+<a  href="/lessons/lesson/{{this.lessonid}}" class = "lesson_href">
+  <div class="cell-element" >
+      <div>{{this.timingbegin}} - {{this.timingend}}</div>
+      <div>{{this.themename}}</div>
+      <div>{{this.audiencename}}</div>
+  </div>
+</a>
+{{/each}}
+{{/if}}
+</div>

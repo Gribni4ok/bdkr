@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{{title}}</title>
+        <link rel="stylesheet" href="/../../css/main.css">
+        <link rel="stylesheet" href="/../../css/table.css">
+    </head>
+    <body>
+        {{> header}}
+        <div>
+            <a href="/lessons/lessons/{{year}}-{{monthnumber}}">Назад</a>
+        </div>
+        <div>
+            <input type="hidden" id="id" value="{{lesson.0.lessonID}}">
+        </div>
+    <div>
+        {{> table data=dat}} 
+        <button id="update-button">Создать</button>
+    </div>
+    </body>
+</html>
+<script>
+    document.getElementById('update-button').onclick = async function(){
+            var data = {
+                lessonID: document.getElementById('id').value,
+                lessondateof: document.getElementById('date').value,
+                typeID: document.getElementById('type').value,
+                teacherID: document.getElementById('teacher').value,
+                themeID: document.getElementById('theme').value,
+                timingID: document.getElementById('timing').value,
+                formatID: document.getElementById('format').value,
+                audienceID: document.getElementById('audience').value,
+                description: document.getElementById('description').value
+            };
+            const response = await fetch('/lessons/create', {
+                method: 'post',
+                body: JSON.stringify(data),
+                headers: {'Content-Type': 'application/json'}
+            });
+        }
+</script>
