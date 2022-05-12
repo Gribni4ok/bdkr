@@ -74,7 +74,7 @@
         </table>
         <label>Режим редактирования</label>
         <input type="checkbox" id="toggle-button" class="toggle-button">
-        <button id="update-button">Сохранить</button>
+        <button hidden id="update-button">Сохранить</button>
     </div>
     </body>
 </html>
@@ -86,6 +86,8 @@
                 input.readOnly = !input.readOnly;
                 input.disabled = !input.disabled
             });
+            var but = document.getElementById("update-button");
+            but.hidden = !but.hidden;
             if(!flag) return;
             flag = false;
 
