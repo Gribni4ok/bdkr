@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{title}}</title>
+        <link rel="stylesheet" href="/../../css/main.css">
+        <link rel="stylesheet" href="/../../css/table.css">
+    </head>
+    <body>
+        {{> header}}
+        {{#each class}}
+        {{> class_table class=this attribute="readonly disabled"}}
+        {{/each}}
+        <table>
+            <caption>Список студентов</caption>
+            <tr>
+                <th>ID студента</th>
+                <th>ФИО студента</th>
+                <th>Пол</th>
+                <th>Почта</th>
+                <th>Номер телефона</th>
+            </tr>
+            {{#each students as |student|}}
+            <tr>
+                <td>{{student.studentID}}</td>
+                <td>{{student.studentsurname}} {{student.studentname}} {{student.studentmidname}}</td>
+                <td>{{student.studentsex}}</td>
+                <td>{{student.studentemail}}</td>
+                <td>{{student.studentphone}}</td>
+            </tr>
+            {{/each}}
+        </table>
+         <label>Режим редактирования</label>
+        <input type="checkbox" id="toggle-button" class="toggle-button">
+        <button hidden id="update-button">Сохранить</button>
+    </body>
+</html>
+<script>
+        var flag = true;
+        document.getElementById('toggle-button').onclick = async function() {
+            var inputs = document.getElementsByName('input');
+            inputs.forEach((input)=>{
+                input.readOnly = !input.readOnly;
+                input.disabled = !input.disabled
+            });
+            var but = document.getElementById("update-button");
+            but.hidden = !but.hidden;
+            if(!flag) return;
+            flag = false;
+
+            const response = await fetch('/classes/class/update/get', {
+                method: 'post',
+                headers: {'Content-Type': 'application/json'}
+            });
+            const res = await response.json();
+
+            var temp = document.getElementById('teacher');
+            res.teachers.forEach((teacher)=>{
+                let value = teacher.teacherID;
+                let option = teacher.teachersurname + " " + teacher.teachername + " " + teacher.teachermidname;
+                if(temp.options[0].value != value)
+                    temp.appendChild(new Option(option,value));
+            });
+            
+            temp = document.getElementById('type');
+            res.types.forEach((type)=>{
+                let value = type.typeID;
+                let option = type.typename;
+                if(temp.options[0].value != value)
+                    temp.appendChild(new Option(option,value));
+            });
+
+            temp = document.getElementById('format');
+            res.formats.forEach((format)=>{
+                let value = format.formatID;
+                let option = format.formatname;
+                if(temp.options[0].value != value)
+                    temp.appendChild(new Option(option,value));
+            });
+
+            temp = document.getElementById('audience');
+            res.audiences.forEach((audience)=>{
+                let value = audience.audienceID;
+                let option = audience.audiencename;
+                if(temp.options[0].value != value)
+                    temp.appendChild(new Option(option,value));
+            });
+            
+            temp = document.getElementById('theme');
+            res.themes.forEach((theme)=>{
+                let value = theme.themeID;
+                let option = theme.themename;
+                if(temp.options[0].value != value)
+                    temp.appendChild(new Option(option,value));
+            });
+
+            temp = document.getElementById('timing');
+            res.timings.forEach((timing)=>{
+                let value = timing.timingID;
+                let option = timing.timingbegin + " - " + timing.timingend;
+                if(temp.options[0].value != value)
+                    temp.appendChild(new Option(option,value));
+            });
+        };
+        document.getElementById('update-button').onclick = async function(){
+            var data = {
+                lessonID: document.getElementById('id').value,
+                lessondateof: document.getElementById('date').value,
+                typeID: document.getElementById('type').value,
+                teacherID: document.getElementById('teacher').value,
+                themeID: document.getElementById('theme').value,
+                timingID: document.getElementById('timing').value,
+                formatID: document.getElementById('format').value,
+                audienceID: document.getElementById('audience').value,
+                description: document.getElementById('description').value
+            };
+            const url = `/lessons/lesson/update`;
+            const response = await fetch('/lessons/lesson/update', {
+                method: 'post',
+                body: JSON.stringify(data),
+                headers: {'Content-Type': 'application/json'}
+            });
+        }
+</script>

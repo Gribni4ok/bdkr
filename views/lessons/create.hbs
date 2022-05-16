@@ -14,7 +14,7 @@
             <input type="hidden" id="id" value="{{lesson.0.lessonID}}">
         </div>
     <div>
-        {{> table data=dat}} 
+        {{> lesson_table data=dat}} 
         <button id="update-button">Создать</button>
     </div>
     </body>
@@ -32,6 +32,15 @@
                 audienceID: document.getElementById('audience').value,
                 description: document.getElementById('description').value
             };
+            if(data.description.length >100) 
+            {
+                alert("Описание не должно быть длиннее 100 символов");
+                return;
+            }
+            if(data.lessondateof.getYear() > 3000 || data.lessondateof.getYear() < 2000){
+                alert("Некорректный год");
+                return;
+            }
             const response = await fetch('/lessons/create', {
                 method: 'post',
                 body: JSON.stringify(data),

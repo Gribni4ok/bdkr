@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const {getLessonsForDate} = require("../classes/lessons.js");
-const {getLessonForID, getUpdateData, updateLessonForID,createLesson} = require("../classes/lesson.js");
+const {getLessonForID, getLessonUpdateData, updateLessonForID,createLesson} = require("../classes/lesson.js");
 const months = require("../consts/values.js");
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
@@ -18,7 +18,7 @@ router.get("/lessons/lessons/:id", async function(request,response){
 });
 
 router.get("/lessons/create", async function(request,response){
-    var data = await getUpdateData();
+    var data = await getLessonUpdateData();
     response.render("lessons/create.hbs", {dat: data});
 });
 
@@ -40,12 +40,17 @@ router.get("/lessons/lesson/:id", async function(request,response){
 });
 
 router.post("/lessons/lesson/update",jsonParser, async function(request,response){
-    if(!request.body) response.sendStatus(400);
+    if(!request.body) 
+    {
+      console.log("Ошибка в update lesson");
+      response.sendStatus(400);
+
+    }
     if(!await updateLessonForID(request.body)) response.sendStatus(400);
 });
 
 router.post("/lessons/lesson/update/get",jsonParser, async function(request,response){
-    var data = await getUpdateData();
+    var data = await getLessonUpdateData();
     response.send(JSON.stringify(data));
 });
 

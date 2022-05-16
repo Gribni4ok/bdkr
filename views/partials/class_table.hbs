@@ -1,0 +1,74 @@
+<table>
+            <caption>Информация о группе</caption>
+            <tr>
+                <th>Наименование группы</th>
+                <td>
+                    {{#if class.classname}}
+                        <input {{attribute}} name="input" id="name" class="table-input" value="{{class.classname}}">
+                    {{else}}
+                        <input name="input" id="name" class="table-input">
+                    {{/if}}
+                </td>
+            </tr>
+            <tr>
+                <th>Дата формирования</th>
+                <td>
+                    {{#if class.classdate}}
+                        <input {{attribute}} name="input" type="date" id="date" class="table-input" value="{{class.classdate}}">
+                    {{else}}
+                        <input name="input" type="date" id="date" class="table-input">
+                    {{/if}}
+                </td>
+            </tr>
+            <tr>
+                <th>Куратор группы</th>
+                <td> <select {{attribute}} name="input" id="teacher">
+                    {{#if class.teacherID}}
+                        <option value = "{{class.teacherID}}">{{class.teachersurname}} {{class.teachername}} {{class.teachermidname}}</option>
+                    {{else}}
+                    {{#each teachers}}
+                        <option value = "{{this.teacherID}}">{{this.teachersurname}} {{this.teachername}} {{this.teachermidname}}</option>
+                    {{/each}}
+                    {{/if}}
+                </select>
+                </td>
+            </tr>
+            <tr>
+                <th>Староста</th>
+                <td>
+                    <select {{attribute}} name="input" id="theme"> 
+                        {{#if class.studentID}}
+                            <option value = "{{class.studentID}}">{{class.studentsurname}} {{class.studentname}} {{class.studentmidname}}</option>
+                        {{else}}
+                        {{#each students}}
+                            <option value = "{{this.studentID}}">{{this.studentsurname}} {{this.studentname}} {{this.studentmidname}}</option>
+                        {{/each}}
+                        {{/if}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>Направление обучения</th>
+                <td>
+                    <select {{attribute}} name="input" id="type">
+                        {{#if class.courseID}}
+                            <option value = "{{class.courseID}}">{{class.coursename}}</option>
+                        {{else}}
+                        {{#each courses}}
+                            <option value = "{{this.courseID}}">{{this.coursename}}</option>
+                        {{/each}}
+                        {{/if}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>Описание</th>
+                <td>
+                    {{#if class.classdesc}}
+                        <input {{attribute}} name="input" id="description" class="table-input" value="{{class.classdesc}}"/>
+                    {{else}}
+                        <input name="input" id="description" class="table-input"/>
+                    {{/if}}
+                </td>
+            </tr>
+        </table>

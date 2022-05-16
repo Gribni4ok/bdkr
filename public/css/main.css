@@ -10,7 +10,16 @@ body {
     /*background: linear-gradient(to bottom, #00d2ff, #5238d4);*/
     color: rgb(0, 0, 0);
   }
-  
+  .create-button{
+    position: fixed;
+    margin-top: 80px;
+    background-color: #d4a1a1;
+    top: 0;
+    margin-left: 30%;
+    width: 100px;
+    height: 40px;
+  }
+
   h1 {
     text-transform: uppercase;
   }
@@ -18,7 +27,7 @@ body {
     margin-top: 100px;
   }
   nav {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;

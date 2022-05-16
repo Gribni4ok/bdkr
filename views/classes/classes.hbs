@@ -3,18 +3,35 @@
     <head>
         <title>{{title}}</title>
         <link rel="stylesheet" href="/../../css/main.css">
+        <link rel="stylesheet" href="/../../css/table.css">
     </head>
     <body>
         {{> header}}
         <table>
             <caption>Список групп</caption>
+            <tr>
+                <th>Название</th>
+                <th>Направление</th>
+                <th>Дата формирования</th>
+            </tr>
             {{#each data}}
+             
                 <tr>
-                    <th>
-                    <a  href="/classes/class/class/{{this.classID}}">
+                    <td>
+                        <a  href="/classes/class/class/{{this.classID}}">
                         {{this.classname}}
-                    </a>
-                    </th>
+                        </a>
+                    </td>
+                    <td>
+                        <a  href="/classes/class/class/{{this.classID}}">
+                        {{this.coursename}}
+                        </a>
+                    </td>
+                    <td>
+                        <a  href="/classes/class/class/{{this.classID}}">
+                        {{this.classdate}}
+                        </a>
+                    </td>
                 </tr>
             {{/each}}
         </table>

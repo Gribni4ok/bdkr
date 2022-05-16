@@ -6,6 +6,7 @@ function createTables(){
   //0 Студент
     request[request.length] = `create table if not exists students(
         studentID smallint not null auto_increment,
+        classID tinyint not null,
         studentsurname nvarchar(30) not null,
         studentname nvarchar(30) not null,
         studentmidname nvarchar(30),
@@ -19,6 +20,7 @@ function createTables(){
         studentpassportby nvarchar(50) not null,
         studentpassportdate date not null,
         primary key(studentID),
+        foreign key(classID) references classes(classID),
         CHECK((studentsurname != '') AND (studentname != '') AND (studentsex != '') 
         AND (studentphone != '') AND (studenttin != '') AND (studentpassport != '') 
         AND (studentlogin != '') AND (studentpassword != ''))
@@ -99,7 +101,7 @@ function createTables(){
         foreign key(courseID) references courses(courseID),
         CHECK (classname != '')
         )`;
-
+/*
         //7 Связь студентов и студенческих групп
         request[request.length] = `create table if not exists studentstoclasses(
         studentID smallint,
@@ -107,7 +109,7 @@ function createTables(){
         foreign key(studentID) references students(studentID) on delete cascade,
         foreign key(classID) references classes(classID) on delete cascade
         )`;
-
+*/
         //8 Времена проведения занятий
         request[request.length] = `create table if not exists timings(
         timingID tinyint not null auto_increment,

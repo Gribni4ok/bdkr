@@ -14,64 +14,9 @@
             <input type="hidden" id="id" value="{{lesson.0.lessonID}}">
         </div>
     <div>
-        <table style="width:130%">
-            <caption>Подробная информация</caption>
-            <tr>
-                <th>Дата проведенния</th>
-                <th><input disabled readonly name="input" id="date" type="date" class="table-input" value="{{lesson.0.lessondateof}}">
-                </th>
-            </tr>
-            <tr>
-                <th>Время проведения</th>
-                <th>
-                    <select disabled name="input" id="timing"> 
-                        <option value = "{{lesson.0.timingID}}">{{lesson.0.timingbegin}} - {{lesson.0.timingend}}</option>
-                    </select>
-                </th>
-            </tr>
-            <tr>
-                <th>Преподаватель</th>
-                <th> <select disabled name="input" id="teacher">
-                    <option value="{{lesson.0.teacherID}}">{{lesson.0.teachersurname}} {{lesson.0.teachername}} {{lesson.0.teachermidname}}</option>
-                    </select>
-                    </th>
-            </tr>
-            <tr>
-                <th>Тема</th>
-                <th>
-                <select disabled name="input" id="theme">
-                <option value="{{lesson.0.themeID}}">{{lesson.0.themename}}</option>
-                </select>
-                </th>
-            </tr>
-            <tr>
-                <th>Тип занятия</th>
-                <th><select disabled name="input" id="type">
-                <option value="{{lesson.0.typeID}}">{{lesson.0.typename}}</option>
-                </select>
-                </th>
-            </tr>
-            <tr>
-                <th>Формат проведения</th>
-                <th><select disabled name="input" id="format">
-                <option value="{{lesson.0.formatID}}">{{lesson.0.formatname}}</option>
-                </select>
-                </th>
-            </tr>
-            <tr>
-                <th>Аудитория</th>
-                <th><select disabled name="input" id="audience">
-                <option value="{{lesson.0.audienceID}}">{{lesson.0.audiencename}}</option>
-                </select>
-                </th>
-            </tr>
-            <tr>
-                <th>Описание</th>
-                <th>
-                <input disabled readonly name="input" id="description" class="table-input" value="{{lesson.0.lessondesc}}" />
-                </th>
-            </tr>
-        </table>
+        {{#each lesson}}
+        {{> lesson_table data=this attribute="disabled readonly"}}
+        {{/each}}
         <label>Режим редактирования</label>
         <input type="checkbox" id="toggle-button" class="toggle-button">
         <button hidden id="update-button">Сохранить</button>
@@ -158,6 +103,16 @@
                 audienceID: document.getElementById('audience').value,
                 description: document.getElementById('description').value
             };
+            if(data.description.length >100) 
+            {
+                alert("Описание не должно быть длиннее 100 символов");
+                return;
+            }
+            var date = data.lessondateof..split(/[- :]/);
+            if(date[0] > 3000 || date[0] < 2000){
+                alert("Некорректный год");
+                return;
+            }
             const url = `/lessons/lesson/update`;
             const response = await fetch('/lessons/lesson/update', {
                 method: 'post',

@@ -31,7 +31,7 @@ const pool = require("../js/init.js");
     return data[0];
   };
 
-async function getUpdateData(){
+async function getLessonUpdateData(){
   let teachers = await pool.execute(`
   SELECT teachers.teacherID,teachers.teachersurname, teachers.teachername, teachers.teachermidname
   FROM teachers
@@ -113,4 +113,4 @@ async function createLesson(data){
      return false;
    });
 }
-module.exports = {getLessonForID, getUpdateData, updateLessonForID, createLesson}
+module.exports = {getLessonForID, getLessonUpdateData, updateLessonForID, createLesson}
