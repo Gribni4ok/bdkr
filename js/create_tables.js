@@ -225,9 +225,7 @@ function createTables(){
           foreign key(clientID) references clients(clientID) on delete cascade,
           foreign key(courseID) references courses(courseID)
         )`;
-        
       fill();
-      
 };
 
 function fill(){

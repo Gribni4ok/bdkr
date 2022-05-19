@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title>{{title}}</title>
         <link rel="stylesheet" href="/../../css/main.css">
@@ -7,5 +7,56 @@
     </head>
     <body>
         {{> header}}
+        <div>
+            <a href="/classes">Назад</a>
+        </div>
+        <div>
+            <input type="hidden" id="id" value="{{lesson.0.lessonID}}">
+        </div>
+    <div>
+        {{> lesson_table data=dat}} 
+        <button id="create-button">Создать</button>
+    </div>
     </body>
 </html>
+<script>
+    document.getElementById('create-button').onclick = async function(){
+            var data = {
+                classname: document.getElementById('name').value
+                classdate: document.getElementById('date').value,
+                teacherID: document.getElementById('teacher').value,
+                studentID: document.getElementById('student').value,
+                courseID: document.getElementById('course').value,
+                formatID: document.getElementById('format').value,
+                audienceID: document.getElementById('audience').value,
+                description: document.getElementById('description').value
+            };
+            var date = data.lessondateof.split(/[- :]/);
+            if(!data.lessondateof ){
+                alert("Некорректный формат даты");
+                return;
+            }
+            if(date[0] > 3000 || date[0] < 2000){
+                alert("Некорректный год");
+                return;
+            }
+            if(data.description.length >100) 
+            {
+                alert("Описание не должно быть длиннее 100 символов");
+                return;
+            }
+            if(data.description.length <1){
+                alert("Введите описание");
+                return;
+            }
+            const response = await fetch('/lessons/create', {
+                method: 'post',
+                body: JSON.stringify(data),
+                headers: {'Content-Type': 'application/json'}
+            });
+        };
+         function auto_grow(element) {
+        element.style.height = "5px";
+        element.style.height = (element.scrollHeight)+"px";
+        };
+</script>

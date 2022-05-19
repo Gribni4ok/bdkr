@@ -5,6 +5,8 @@ table, th, td {
     text-align: left;
     font-weight: normal;
   }
+  table.fixed { table-layout:fixed; }
+  table.fixed td { overflow: hidden; }
   td a { 
     display: block; 
     text-decoration: none; 
@@ -71,9 +73,12 @@ table, th, td {
     -webkit-appearance: none;
     -moz-appearance: none;
   }
-  .table-input{
+  .table-element{
     border: 0px;
     font-family: 'Montserrat', sans-serif;
     font-size: 20px;
     color: black;
+  }
+  .table-textarea{
+    resize: none;
   }

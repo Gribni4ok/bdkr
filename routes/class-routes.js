@@ -10,6 +10,7 @@ router.get("/classes",async function(request,response){
 
 router.post("/classes/class/update/get", async function(request,response){
     var data = await getClassUpdateData();
+    console.log(data);
     response.send(JSON.stringify(data));
 });
 
@@ -17,11 +18,10 @@ router.get("/classes/class/class/:id", async function(request,response){
     const id = request.params.id;
     var data = await getClassForID(id);
     var students = await getStudentsForClassID(id);
-    console.log(data);
     response.render("classes/class.hbs", {class: data, students: students});
 });
 
-router.get("/classes/class/create", async function(request,response){
+router.get("/classes/create", async function(request,response){
     response.render("classes/create.hbs");
 });
 

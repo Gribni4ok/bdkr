@@ -32,13 +32,22 @@
                 audienceID: document.getElementById('audience').value,
                 description: document.getElementById('description').value
             };
+            var date = data.lessondateof.split(/[- :]/);
+            if(!data.lessondateof ){
+                alert("Некорректный формат даты");
+                return;
+            }
+            if(date[0] > 3000 || date[0] < 2000){
+                alert("Некорректный год");
+                return;
+            }
             if(data.description.length >100) 
             {
                 alert("Описание не должно быть длиннее 100 символов");
                 return;
             }
-            if(data.lessondateof.getYear() > 3000 || data.lessondateof.getYear() < 2000){
-                alert("Некорректный год");
+            if(data.description.length <1){
+                alert("Введите описание");
                 return;
             }
             const response = await fetch('/lessons/create', {
@@ -46,5 +55,9 @@
                 body: JSON.stringify(data),
                 headers: {'Content-Type': 'application/json'}
             });
-        }
+        };
+         function auto_grow(element) {
+        element.style.height = "5px";
+        element.style.height = (element.scrollHeight)+"px";
+        };
 </script>

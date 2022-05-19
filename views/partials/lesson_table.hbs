@@ -1,12 +1,14 @@
-<table style="width:130%">
+<table class="fixed">
             <caption>Подробная информация</caption>
+            <col width="100px"/>
+            <col width="100px"/>
             <tr>
                 <th>Дата проведенния</th>
                 <td>
                     {{#if data.lessondateof}}
-                        <input {{attribute}} name="input" id="date" type="date" class="table-input" value="{{data.lessondateof}}">
+                        <input {{attribute}} name="input" id="date" type="date" class="table-element" value="{{data.lessondateof}}">
                     {{else}}
-                    <input name="input" id="date" type="date" class="table-input">
+                    <input name="input" id="date" type="date" class="table-element">
                     {{/if}}
                 </td>
             </tr>
@@ -97,11 +99,9 @@
                 <th>Описание</th>
                 <td>
                     {{#if data.lessondesc}}
-                        <textarea {{attribute}} name="input" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' id="description" class="table-input">
-                            {{data.lessondesc}}
-                        </textarea>
+                        <textarea {{attribute}} oninput="auto_grow(this)" name="input" id="description" class="table-element table-textarea">{{data.lessondesc}}</textarea>
                     {{else}}
-                        <textarea name="input" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'  id="description" class="table-input"></textarea>
+                        <textarea oninput="auto_grow(this)" name="input" id="description" class="table-element table-textarea"></textarea>
                     {{/if}}
                 </td>
             </tr>

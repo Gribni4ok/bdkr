@@ -33,6 +33,8 @@
             });
             var but = document.getElementById("update-button");
             but.hidden = !but.hidden;
+            but = document.getElementById("description");
+            
             if(!flag) return;
             flag = false;
 
@@ -108,7 +110,11 @@
                 alert("Описание не должно быть длиннее 100 символов");
                 return;
             }
-            var date = data.lessondateof..split(/[- :]/);
+            else if(data.description.length <1){
+                alert("Введите описание");
+                return;
+            }
+            var date = data.lessondateof.split(/[- :]/);
             if(date[0] > 3000 || date[0] < 2000){
                 alert("Некорректный год");
                 return;
@@ -119,5 +125,9 @@
                 body: JSON.stringify(data),
                 headers: {'Content-Type': 'application/json'}
             });
-        }
+        };
+        function auto_grow(element) {
+        element.style.height = "5px";
+        element.style.height = (element.scrollHeight)+"px";
+        };
 </script>

@@ -4,9 +4,9 @@
                 <th>Наименование группы</th>
                 <td>
                     {{#if class.classname}}
-                        <input {{attribute}} name="input" id="name" class="table-input" value="{{class.classname}}">
+                        <input {{attribute}} name="input" id="name" class="table-element" value="{{class.classname}}">
                     {{else}}
-                        <input name="input" id="name" class="table-input">
+                        <input name="input" id="name" class="table-element">
                     {{/if}}
                 </td>
             </tr>
@@ -14,9 +14,9 @@
                 <th>Дата формирования</th>
                 <td>
                     {{#if class.classdate}}
-                        <input {{attribute}} name="input" type="date" id="date" class="table-input" value="{{class.classdate}}">
+                        <input {{attribute}} name="input" type="date" id="date" class="table-element" value="{{class.classdate}}">
                     {{else}}
-                        <input name="input" type="date" id="date" class="table-input">
+                        <input name="input" type="date" id="date" class="table-element">
                     {{/if}}
                 </td>
             </tr>
@@ -36,7 +36,7 @@
             <tr>
                 <th>Староста</th>
                 <td>
-                    <select {{attribute}} name="input" id="theme"> 
+                    <select {{attribute}} name="input" id="student"> 
                         {{#if class.studentID}}
                             <option value = "{{class.studentID}}">{{class.studentsurname}} {{class.studentname}} {{class.studentmidname}}</option>
                         {{else}}
@@ -50,7 +50,7 @@
             <tr>
                 <th>Направление обучения</th>
                 <td>
-                    <select {{attribute}} name="input" id="type">
+                    <select {{attribute}} name="input" id="course">
                         {{#if class.courseID}}
                             <option value = "{{class.courseID}}">{{class.coursename}}</option>
                         {{else}}
@@ -65,9 +65,9 @@
                 <th>Описание</th>
                 <td>
                     {{#if class.classdesc}}
-                        <input {{attribute}} name="input" id="description" class="table-input" value="{{class.classdesc}}"/>
+                        <textarea {{attribute}} name="input" id="description" class="table-element table-textarea">{{class.classdesc}}</textarea>
                     {{else}}
-                        <input name="input" id="description" class="table-input"/>
+                        <textarea name="input" id="description" class="table-element table-textarea"></textarea>
                     {{/if}}
                 </td>
             </tr>
