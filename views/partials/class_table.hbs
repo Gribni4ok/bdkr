@@ -36,15 +36,13 @@
             <tr>
                 <th>Староста</th>
                 <td>
-                    <select {{attribute}} name="input" id="student"> 
+                    
                         {{#if class.studentID}}
-                            <option value = "{{class.studentID}}">{{class.studentsurname}} {{class.studentname}} {{class.studentmidname}}</option>
+                            <label {{attribute}} name="input" id="student"  value = "{{class.studentID}}">{{class.studentsurname}} {{class.studentname}} {{class.studentmidname}}</label>
                         {{else}}
-                        {{#each students}}
-                            <option value = "{{this.studentID}}">{{this.studentsurname}} {{this.studentname}} {{this.studentmidname}}</option>
-                        {{/each}}
+                            <label {{attribute}} name="input" id="student"></label>
                         {{/if}}
-                    </select>
+                    </label>
                 </td>
             </tr>
             <tr>

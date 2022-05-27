@@ -23,8 +23,6 @@ router.get("/lessons/create", async function(request,response){
 });
 
 router.post("/lessons/create", jsonParser,async function(request,response){
-  console.log("ПРИНЯЛ");
-    console.log(request.body);
     if(!await createLesson(request.body)) response.sendStatus(400);
 });
 

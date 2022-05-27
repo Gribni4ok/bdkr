@@ -16,8 +16,7 @@
             <td>{{student.studentemail}}</td>
             <td>{{student.studentphone}}</td>
             <td>
-            <button class="btn"><i class="gg-backspace"></i></button>
-            <button class="btn"><i class="gg-pen"></i></button>
+            <a href="/students/student/student/{{student.studentID}}"><button class="edit-button"><i class="gg-pen"></i></button></a>
             </td>
         </tr>
         {{/each}}

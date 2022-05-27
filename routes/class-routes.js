@@ -1,5 +1,4 @@
 const express = require("express");
-const async = require("hbs/lib/async");
 const router = express.Router();
 const {getClasses,getClassUpdateData, getClassForID, getStudentsForClassID} = require("../classes/classes.js");
 
@@ -10,7 +9,6 @@ router.get("/classes",async function(request,response){
 
 router.post("/classes/class/update/get", async function(request,response){
     var data = await getClassUpdateData();
-    console.log(data);
     response.send(JSON.stringify(data));
 });
 

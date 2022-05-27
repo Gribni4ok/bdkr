@@ -54,7 +54,6 @@ function fillWithEmptys(year,month){
 function sortData(data){
 var arr = [];
 var secondarr = [];
-console.log("SORTIMNG " + data[0].lessondateof)
 var date = parseDate(data[0].lessondateof);
 //Отсчёт от понедельника
 arr = fillTillMonday(date);

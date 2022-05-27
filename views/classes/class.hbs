@@ -5,6 +5,7 @@
         <link rel="stylesheet" href="/../../css/main.css">
         <link rel="stylesheet" href="/../../css/table.css">
         <link href='https://css.gg/css' rel='stylesheet'>
+        
     </head>
     <body>
         {{> header}}
@@ -35,7 +36,7 @@
         
         if(!flag) return;
         flag = false;
-
+        
         const response = await fetch('/classes/class/update/get', {
             method: 'post',
             headers: {'Content-Type': 'application/json'}
@@ -59,21 +60,45 @@
         });
     }
     
-        document.getElementById('update-button').onclick = async function(){
-            var data = {
-                classID: document.getElementById('id').value,
-                classdate: document.getElementById('date').value,
-                classname: document.getElementById('name').value,
-                studentID: document.getElementById('student').value,
-                courseID: document.getElementById('course').value,
-                teacherID: document.getElementById('teacher').value,
-                description: document.getElementById('description').value
-            };
+    document.getElementById('update-button').onclick = async function(){
+        var data = {
+            classID: document.getElementById('id').value,
+            classdate: document.getElementById('date').value,
+            classname: document.getElementById('name').value,
+            studentID: document.getElementById('student').value,
+            courseID: document.getElementById('course').value,
+            teacherID: document.getElementById('teacher').value,
+            description: document.getElementById('description').value
+        };
+        console.log(data);
+        var date = data.сlassdate.split(/[- :]/);
+        if(!data.сlassdate){
+            alert("Некорректный формат даты");
+            return;
+        }
+        if(date[0] > 3000 || date[0] < 2000){
+            alert("Некорректный год");
+            return;
+        }
+        if(data.description.length >120) 
+        {
+            alert("Описание не должно быть длиннее 120 символов");
+            return;
+        }
+        str = data.classname.replace(/\s/g, '');
+        if(!str || str.lenght<1)
+        {
+            alert("Введите название группы");
+            return;
+        }
             const url = `/lessons/lesson/update`;
             const response = await fetch('/lessons/lesson/update', {
                 method: 'post',
                 body: JSON.stringify(data),
                 headers: {'Content-Type': 'application/json'}
             });
-        }
+    }
+    document.getElementsByClassName("").onclick = async function(){
+
+    }
 </script>
