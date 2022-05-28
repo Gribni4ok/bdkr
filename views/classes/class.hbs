@@ -71,8 +71,9 @@
             description: document.getElementById('description').value
         };
         console.log(data);
-        var date = data.сlassdate.split(/[- :]/);
-        if(!data.сlassdate){
+        var date = data.classdate.split(/[- :]/);
+        console.log(date);
+        if(!data.classdate){
             alert("Некорректный формат даты");
             return;
         }
@@ -85,14 +86,14 @@
             alert("Описание не должно быть длиннее 120 символов");
             return;
         }
+        var str = data.classname;
         str = data.classname.replace(/\s/g, '');
         if(!str || str.lenght<1)
         {
             alert("Введите название группы");
             return;
         }
-            const url = `/lessons/lesson/update`;
-            const response = await fetch('/lessons/lesson/update', {
+            const response = await fetch('/classes/class/update', {
                 method: 'post',
                 body: JSON.stringify(data),
                 headers: {'Content-Type': 'application/json'}

@@ -1,4 +1,3 @@
-const async = require("hbs/lib/async");
 const pool = require("../js/init.js");
 
 async function getClasses(){
@@ -65,4 +64,38 @@ async function getClassUpdateData(){
 
   return {courses: courses[0], teachers: teachers[0]}
 }
-module.exports = {getClasses,getClassUpdateData ,getClassForID,getStudentsForClassID}
+async function UpdateClassForID(data){
+    await pool.execute(`
+    UPDATE classes
+    SET studentID = "${data.studentID}",
+        teacherID = "${data.teacherID}",
+        classdate = "${data.classdate}",
+        classdesc = "${data.description}",
+        classname = "${data.classname}",
+        courseID = "${data.courseID}"
+    WHERE classID = "${data.classID}"
+  `)
+  .then(()=>{
+    return true;
+ })
+ .catch(err=>{
+   console.log(err);
+   return false;
+ });
+ return true;
+}
+async function createClass(data){
+  await pool.execute(`
+  INSERT classes(courseID, teacherID, classname, classdate, classdesc)
+  VALUES ("${data.courseID}","${data.teacherID}","${data.classname}","${data.classdate}","${data.classdesc}")
+`)
+.then(result=>{
+console.log(result);
+return true;
+})
+.catch(err=>{
+console.log(err);
+return false;
+});
+}
+module.exports = {getClasses,getClassUpdateData ,getClassForID,getStudentsForClassID, UpdateClassForID, createClass}

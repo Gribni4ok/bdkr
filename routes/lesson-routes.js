@@ -23,7 +23,8 @@ router.get("/lessons/create", async function(request,response){
 });
 
 router.post("/lessons/create", jsonParser,async function(request,response){
-    if(!await createLesson(request.body)) response.sendStatus(400);
+    if(!request.body ||!await createLesson(request.body)) response.sendStatus(400);
+    else response.sendStatus(200);
 });
 
 router.get("/lessons/lesson/:id", async function(request,response){

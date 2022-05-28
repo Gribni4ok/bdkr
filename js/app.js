@@ -18,6 +18,7 @@ app.use(lessonRoutes);
 app.use(classRoutes);
 
 app.use(express.static('public'));
+
 app.get("/list",function(_,response){
   response.render("list.hbs");
 });

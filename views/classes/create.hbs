@@ -8,31 +8,28 @@
     <body>
         {{> header}}
         <div>
-            <a href="/classes">Назад</a>
+            <input type="hidden" id="id" value="{{class.0.classID}}">
         </div>
-        <div>
-            <input type="hidden" id="id" value="{{lesson.0.lessonID}}">
-        </div>
-    <div>
-        {{> lesson_table data=dat}} 
+        {{> class_table courses=data.courses teachers=data.teachers}}
         <button id="create-button">Создать</button>
-    </div>
     </body>
 </html>
+<script defer>
+    document.getElementById('date').value = new Date().toISOString().substring(0, 10);
+</script>
 <script>
     document.getElementById('create-button').onclick = async function(){
-            var data = {
-                classname: document.getElementById('name').value
-                classdate: document.getElementById('date').value,
-                teacherID: document.getElementById('teacher').value,
-                studentID: document.getElementById('student').value,
-                courseID: document.getElementById('course').value,
-                formatID: document.getElementById('format').value,
-                audienceID: document.getElementById('audience').value,
-                description: document.getElementById('description').value
+           var data = {
+            classID: document.getElementById('id').value,
+            classdate: document.getElementById('date').value,
+            classname: document.getElementById('name').value,
+            courseID: document.getElementById('course').value,
+            teacherID: document.getElementById('teacher').value,
+            description: document.getElementById('description').value
             };
-            var date = data.lessondateof.split(/[- :]/);
-            if(!data.lessondateof ){
+            var date = data.classdate.split(/[- :]/);
+            console.log(date);
+            if(!data.classdate){
                 alert("Некорректный формат даты");
                 return;
             }
@@ -40,22 +37,25 @@
                 alert("Некорректный год");
                 return;
             }
-            if(data.description.length >100) 
+            if(data.description.length >120) 
             {
-                alert("Описание не должно быть длиннее 100 символов");
+                alert("Описание не должно быть длиннее 120 символов");
                 return;
             }
-            if(data.description.length <1){
-                alert("Введите описание");
+            var str = data.classname;
+            str = data.classname.replace(/\s/g, '');
+            if(!str || str.lenght<1)
+            {
+                alert("Введите название группы");
                 return;
             }
-            const response = await fetch('/lessons/create', {
+            const response = await fetch('/classes/create', {
                 method: 'post',
                 body: JSON.stringify(data),
                 headers: {'Content-Type': 'application/json'}
             });
         };
-         function auto_grow(element) {
+        function auto_grow(element) {
         element.style.height = "5px";
         element.style.height = (element.scrollHeight)+"px";
         };

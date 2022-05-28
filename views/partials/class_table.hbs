@@ -16,7 +16,7 @@
                     {{#if class.classdate}}
                         <input {{attribute}} name="input" type="date" id="date" class="table-element" value="{{class.classdate}}">
                     {{else}}
-                        <input name="input" type="date" id="date" class="table-element">
+                        <input name="input" type="date" id="date" class="table-element" value="{{date}}">
                     {{/if}}
                 </td>
             </tr>
@@ -36,11 +36,13 @@
             <tr>
                 <th>Староста</th>
                 <td>
-                    
+
                         {{#if class.studentID}}
-                            <label {{attribute}} name="input" id="student"  value = "{{class.studentID}}">{{class.studentsurname}} {{class.studentname}} {{class.studentmidname}}</label>
+                            <input type="hidden" id="student" value="{{class.studentID}}">
+                            <label {{attribute}} name="student" id="student-name">{{class.studentsurname}} {{class.studentname}} {{class.studentmidname}}</label>
                         {{else}}
-                            <label {{attribute}} name="input" id="student"></label>
+                            <input type="hidden" id="student" >
+                            <label {{attribute}} name="input" id="student-name"></label>
                         {{/if}}
                     </label>
                 </td>
@@ -62,6 +64,7 @@
             <tr>
                 <th>Описание</th>
                 <td>
+                    
                     {{#if class.classdesc}}
                         <textarea {{attribute}} name="input" id="description" class="table-element table-textarea">{{class.classdesc}}</textarea>
                     {{else}}
