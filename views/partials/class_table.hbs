@@ -23,8 +23,8 @@
             <tr>
                 <th>Куратор группы</th>
                 <td> <select {{attribute}} name="input" id="teacher">
-                    {{#if class.teacherID}}
-                        <option value = "{{class.teacherID}}">{{class.teachersurname}} {{class.teachername}} {{class.teachermidname}}</option>
+                    {{#if teacher.teacherID}}
+                        <option value = "{{teacher.teacherID}}">{{teacher.teachersurname}} {{teacher.teachername}} {{teacher.teachermidname}}</option>
                     {{else}}
                     {{#each teachers}}
                         <option value = "{{this.teacherID}}">{{this.teachersurname}} {{this.teachername}} {{this.teachermidname}}</option>
@@ -37,9 +37,9 @@
                 <th>Староста</th>
                 <td>
 
-                        {{#if class.studentID}}
-                            <input type="hidden" id="student" value="{{class.studentID}}">
-                            <label {{attribute}} name="student" id="student-name">{{class.studentsurname}} {{class.studentname}} {{class.studentmidname}}</label>
+                        {{#if student.studentID}}
+                            <input type="hidden" id="student" value="{{student.studentID}}">
+                            <label {{attribute}} name="student" id="student-name">{{student.studentsurname}} {{student.studentname}} {{student.studentmidname}}</label>
                         {{else}}
                             <input type="hidden" id="student" >
                             <label {{attribute}} name="input" id="student-name"></label>

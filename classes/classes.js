@@ -14,24 +14,35 @@ async function getClasses(){
     return data[0];
 };
 async function getClassForID(id){
-    var data = await pool.execute(`
+    var info = await pool.execute(`
     SELECT classes.classdesc, classes.classname, classes.classID, classes.classdate, 
-    students.studentsurname, students.studentname, students.studentmidname, students.studentID,
-    courses.courseID, courses.coursename,
-    teachers.teachersurname, teachers.teachername, teachers.teachermidname, teachers.teacherID
+    courses.courseID, courses.coursename
     FROM classes
     INNER JOIN courses
     ON classes.courseID = courses.courseID
-    INNER JOIN teachers
-    ON classes.teacherID = teachers.teacherID
-    INNER JOIN students
-    ON classes.studentID = students.studentID
     WHERE classes.classID = "${id}"
+    LIMIT 1
     `)
     .catch(err=>{
         console.log(err);
     });
-    return data[0];
+    var student = await pool.execute(`
+    SELECT students.studentsurname, students.studentname, students.studentmidname, students.studentID
+    FROM classes
+    INNER JOIN students
+    ON classes.studentID = students.studentID
+    WHERE classes.classID = "${id}"
+    LIMIT 1
+    `);
+    var teacher = await pool.execute(`
+    SELECT teachers.teachersurname, teachers.teachername, teachers.teachermidname, teachers.teacherID
+    FROM classes
+    INNER JOIN teachers
+    ON classes.teacherID = teachers.teacherID
+    WHERE classes.classID = "${id}"
+    LIMIT 1
+    `);
+    return {info: info[0], student: student[0], teacher: teacher[0]};
 };  
 async function getStudentsForClassID(id){
     var data = await pool.execute(`
@@ -74,6 +85,7 @@ async function UpdateClassForID(data){
         classname = "${data.classname}",
         courseID = "${data.courseID}"
     WHERE classID = "${data.classID}"
+    LIMIT 1
   `)
   .then(()=>{
     return true;
@@ -85,17 +97,15 @@ async function UpdateClassForID(data){
  return true;
 }
 async function createClass(data){
+  console.log(data);
   await pool.execute(`
   INSERT classes(courseID, teacherID, classname, classdate, classdesc)
   VALUES ("${data.courseID}","${data.teacherID}","${data.classname}","${data.classdate}","${data.classdesc}")
 `)
-.then(result=>{
-console.log(result);
-return true;
-})
 .catch(err=>{
-console.log(err);
-return false;
+  console.log(err);
+  return false;
 });
+return true;
 }
 module.exports = {getClasses,getClassUpdateData ,getClassForID,getStudentsForClassID, UpdateClassForID, createClass}

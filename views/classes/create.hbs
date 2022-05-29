@@ -20,7 +20,6 @@
 <script>
     document.getElementById('create-button').onclick = async function(){
            var data = {
-            classID: document.getElementById('id').value,
             classdate: document.getElementById('date').value,
             classname: document.getElementById('name').value,
             courseID: document.getElementById('course').value,
@@ -37,7 +36,8 @@
                 alert("Некорректный год");
                 return;
             }
-            if(data.description.length >120) 
+            if(!date.description) date.description = "";
+            else if(data.description.length >120) 
             {
                 alert("Описание не должно быть длиннее 120 символов");
                 return;

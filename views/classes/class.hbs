@@ -12,9 +12,7 @@
         <div>
             <input type="hidden" id="id" value="{{class.0.classID}}">
         </div>
-        {{#each class}}
-        {{> class_table class=this attribute="readonly disabled"}}
-        {{/each}}
+        {{> class_table class=info teacher=teacher student=student attribute="readonly disabled"}}
         {{> students_table students=students}}
          <label>Режим редактирования</label>
         <input type="checkbox" id="toggle-button" class="toggle-button">
