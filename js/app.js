@@ -4,7 +4,7 @@ const hbs = require('hbs');
 const createTables = require("./create_tables.js");
 const lessonRoutes = require("../routes/lesson-routes.js");
 const classRoutes = require("../routes/class-routes.js");
-
+const studentRoutes = require("../routes/student-routes.js");
 
 createTables();
 
@@ -16,7 +16,11 @@ app.set("view engine", "hbs");
 
 app.use(lessonRoutes);
 app.use(classRoutes);
+app.use(studentRoutes);
 
+hbs.registerHelper('compareStrings', function(p, q, options) {
+  return (p == q) ? options.fn(this) : options.inverse(this);
+});
 app.use(express.static('public'));
 
 app.get("/list",function(_,response){

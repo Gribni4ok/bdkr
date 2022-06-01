@@ -6,7 +6,7 @@ function createTables(){
   //0 Студент
     request[request.length] = `create table if not exists students(
         studentID smallint not null auto_increment,
-        classID tinyint not null,
+        classID tinyint null,
         studentsurname nvarchar(30) not null,
         studentname nvarchar(30) not null,
         studentmidname nvarchar(30),
@@ -20,7 +20,7 @@ function createTables(){
         studentpassportby nvarchar(50) not null,
         studentpassportdate date not null,
         primary key(studentID),
-        foreign key(classID) references classes(classID),
+        foreign key(classID) references classes(classID) ON DELETE SET NULL,
         CHECK((studentsurname != '') AND (studentname != '') AND (studentsex != '') 
         AND (studentphone != '') AND (studenttin != '') AND (studentpassport != '') 
         AND (studentlogin != '') AND (studentpassword != ''))
@@ -97,8 +97,11 @@ function createTables(){
         courseID tinyint,
         classname nvarchar(30) not null,
         classdate date not null,
+        classdesc varchar(200) null,
+        teacherID tinyint null,
         primary key(classID),
-        foreign key(courseID) references courses(courseID),
+        foreign key(courseID) references courses(courseID) ON DELETE SET NULL,
+        foreign key(teacherID) references teachers(teacherID) ON DELETE SET NULL,
         CHECK (classname != '')
         )`;
 /*
@@ -158,12 +161,12 @@ function createTables(){
         lessondesc varchar(100) not null,
         themeID smallint,
         primary key(lessonID),
-        foreign key(formatID) references formats(formatID),
-        foreign key(audienceID) references audiences(audienceID),
-        foreign key(timingID) references timings(timingID),
-        foreign key(typeID) references types(typeID),
-        foreign key(teacherID) references teachers(teacherID),
-        foreign key(themeID) references themes(themeID),
+        foreign key(formatID) references formats(formatID) ON DELETE SET NULL,
+        foreign key(audienceID) references audiences(audienceID) ON DELETE SET NULL,
+        foreign key(timingID) references timings(timingID) ON DELETE SET NULL,
+        foreign key(typeID) references types(typeID) ON DELETE SET NULL,
+        foreign key(teacherID) references teachers(teacherID) ON DELETE SET NULL,
+        foreign key(themeID) references themes(themeID) ON DELETE SET NULL,
         CHECK (lessondesc != '')
         )`;
         //14 Связь групп и занятий

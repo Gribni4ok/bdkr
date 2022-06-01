@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{title}}</title>
+        <link rel="stylesheet" href="/../../css/main.css">
+        <link rel="stylesheet" href="/../../css/table.css">
+        <link href='https://css.gg/css' rel='stylesheet'>
+        
+    </head>
+    <body>
+        {{> header}}
+        {{> student_table student=student attribute="disabled readonly"}}
+        <label>Режим редактирования</label>
+        <input type="checkbox" id="toggle-button" class="toggle-button">
+        <button hidden id="update-button">Сохранить</button>
+    </body>
+</html>
+
+<script>
+    var flag = true;
+    document.getElementById('toggle-button').onclick = async function() {
+            var inputs = document.getElementsByName('input');
+            inputs.forEach((input)=>{
+                input.readOnly = !input.readOnly;
+                input.disabled = !input.disabled
+            });
+            var but = document.getElementById("update-button");
+            but.hidden = !but.hidden;
+            
+            if(!flag) return;
+            flag = false;
+
+            const response = await fetch('/students/student/update/get', {
+                method: 'post',
+                headers: {'Content-Type': 'application/json'}
+            });
+            const res = await response.json();
+
+            var temp = document.getElementById('class');
+            res.classes.forEach((clas)=>{
+            let value = clas.classID;
+            let option = clas.classname;
+            if(temp.options[0].value != value)
+                temp.appendChild(new Option(option,value));
+        });
+    }
+    document.getElementById('update-button').onclick = async function(){
+        var fio = document.getElementById('fio').value.split(/\s+/);
+        if(!fio[0]) {alert("Введите имя");return;}
+        if(!fio[1]) {alert("Введите фамилию");return;}
+        var midname = "";
+        if(fio[2]) midname = fio[2];
+        var data = {
+            studentID: document.getElementById('id').value,
+            classID: document.getElementById('class').value,
+            studentsurname: fio[0],
+            studentname: fio[1],
+            studentmidname: midname,
+            studentsex: document.getElementById('sex').value,
+            studentemail: document.getElementById('email').value,
+            studentphone: document.getElementById('phone').value,
+            studenttin: document.getElementById('tin').value,
+            studentpassport: document.getElementById('passport').value,
+            studentpassportby: document.getElementById('passportby').value,
+            studentpassportdate: document.getElementById('passportdate').value
+        };
+        if(data.studentsurname.length > 30){alert("Фамилия не должна быть длиннее 30 симоволов"); return;}
+        if(data.studentname.length > 30){alert("Имя не должно быть длиннее 30 симоволов"); return;}
+        if(data.studentmidname.length > 30){alert("Отчество не должно быть длиннее 30 симоволов"); return;}
+        if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(data.studentemail) || data.studentemail.length > 30){alert("Неверный email"); return;}
+        if(!/^\d+$/.test(data.studentphone) || data.studentphone.length > 11){alert("Некорректный номер телефона");return;}
+        if(!/^\d+$/.test(data.studenttin) || data.studenttin.length != 12){alert("Некорректный ИНН");return;}
+        if(!/^\d+$/.test(data.studentpassport) || data.studentpassport.length !=10){alert("Некорректные номер и серия паспорта");return;}
+        if(data.studentpassportby.lenght > 50){alert("Место выдачи должно быть не длиннее 50 символов");return;}
+        var date = data.studentpassportdate.split(/[- :]/);
+        if(!data.studentpassportdate){alert("Некорректный формат даты");return;}
+        var curdate = new Date();
+        if(parseInt(date[0]) > curdate.getFullYear()-14 || parseInt(date[0]) < curdate.getFullYear()-80){alert("Некорректный год");return;}
+        
+        const response = await fetch('/students/student/update', {
+            method: 'post',
+            body: JSON.stringify(data),
+            headers: {'Content-Type': 'application/json'}
+        });
+    }
+</script>

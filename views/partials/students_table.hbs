@@ -3,21 +3,17 @@
         <tr>
             <th>ID студента</th>
             <th>ФИО студента</th>
-            <th>Пол</th>
+            <th>Группа</th>
             <th>Почта</th>
             <th>Номер телефона</th>
-            <th></th>
         </tr>
         {{#each students as |student|}}
         <tr>
-            <td>{{student.studentID}}</td>
-            <td>{{student.studentsurname}} {{student.studentname}} {{student.studentmidname}}</td>
-            <td>{{student.studentsex}}</td>
-            <td>{{student.studentemail}}</td>
-            <td>{{student.studentphone}}</td>
-            <td>
-            <a href="/students/student/student/{{student.studentID}}"><button class="edit-button"><i class="gg-pen"></i></button></a>
-            </td>
+            <td><a  href="/students/student/student/{{student.studentID}}">{{student.studentID}}</a></td>
+            <td><a  href="/students/student/student/{{student.studentID}}">{{student.studentsurname}} {{student.studentname}} {{student.studentmidname}}</a></td>
+            <td><a  href="/classes/class/class/{{student.classID}}">{{student.classname}}</a></td>
+            <td><a  href="/students/student/student/{{student.studentID}}">{{student.studentemail}}</a></td>
+            <td><a  href="/students/student/student/{{student.studentID}}">{{student.studentphone}}</a></td>
         </tr>
         {{/each}}
 </table>

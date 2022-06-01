@@ -26,14 +26,6 @@ async function getClassForID(id){
     .catch(err=>{
         console.log(err);
     });
-    var student = await pool.execute(`
-    SELECT students.studentsurname, students.studentname, students.studentmidname, students.studentID
-    FROM classes
-    INNER JOIN students
-    ON classes.studentID = students.studentID
-    WHERE classes.classID = "${id}"
-    LIMIT 1
-    `);
     var teacher = await pool.execute(`
     SELECT teachers.teachersurname, teachers.teachername, teachers.teachermidname, teachers.teacherID
     FROM classes
@@ -42,13 +34,16 @@ async function getClassForID(id){
     WHERE classes.classID = "${id}"
     LIMIT 1
     `);
-    return {info: info[0], student: student[0], teacher: teacher[0]};
+    return {info: info[0], teacher: teacher[0]};
 };  
 async function getStudentsForClassID(id){
     var data = await pool.execute(`
-        SELECT studentID, studentsurname, studentname, studentmidname, studentsex, studentemail, studentphone
+        SELECT students.studentID, students.studentsurname, students.studentname, students.studentmidname, students.studentsex, students.studentemail, students.studentphone, 
+        classes.classname, classes.classID
         FROM students
-        WHERE classID = "${id}" 
+        INNER JOIN classes
+        ON students.classID = classes.classID
+        WHERE students.classID = "${id}" 
     `)
     .catch(err=>{
         console.log(err);
@@ -71,21 +66,19 @@ async function getClassUpdateData(){
   .catch(err=>{
     console.log(err);
   });
-
-
   return {courses: courses[0], teachers: teachers[0]}
 }
 async function UpdateClassForID(data){
+  if(!data.studentID || data.studentID == '') data.studentID = 0;
+  if(!data.teacherID || data.teacherID == '') data.teacherID = 0;
     await pool.execute(`
     UPDATE classes
-    SET studentID = "${data.studentID}",
-        teacherID = "${data.teacherID}",
+    SET teacherID = "${data.teacherID}",
         classdate = "${data.classdate}",
         classdesc = "${data.description}",
         classname = "${data.classname}",
         courseID = "${data.courseID}"
     WHERE classID = "${data.classID}"
-    LIMIT 1
   `)
   .then(()=>{
     return true;
@@ -97,10 +90,9 @@ async function UpdateClassForID(data){
  return true;
 }
 async function createClass(data){
-  console.log(data);
   await pool.execute(`
   INSERT classes(courseID, teacherID, classname, classdate, classdesc)
-  VALUES ("${data.courseID}","${data.teacherID}","${data.classname}","${data.classdate}","${data.classdesc}")
+  VALUES ("${data.courseID}","${data.teacherID}","${data.classname}","${data.classdate}","${data.description}")
 `)
 .catch(err=>{
   console.log(err);

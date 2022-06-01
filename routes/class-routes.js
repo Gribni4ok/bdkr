@@ -23,8 +23,7 @@ router.get("/classes/class/class/:id", async function(request,response){
     const id = request.params.id;
     var data = await getClassForID(id);
     var students = await getStudentsForClassID(id);
-    console.log(data);
-    response.render("classes/class.hbs", {info: data.info[0], teacher: data.teacher[0], student: data.student[0], students: students});
+    response.render("classes/class.hbs", {info: data.info[0], teacher: data.teacher[0], students: students});
 });
 
 router.get("/classes/create", async function(request,response){

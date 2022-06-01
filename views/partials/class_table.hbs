@@ -3,21 +3,13 @@
             <tr>
                 <th>Наименование группы</th>
                 <td>
-                    {{#if class.classname}}
                         <input {{attribute}} name="input" id="name" class="table-element" value="{{class.classname}}">
-                    {{else}}
-                        <input name="input" id="name" class="table-element">
-                    {{/if}}
                 </td>
             </tr>
             <tr>
                 <th>Дата формирования</th>
                 <td>
-                    {{#if class.classdate}}
                         <input {{attribute}} name="input" type="date" id="date" class="table-element" value="{{class.classdate}}">
-                    {{else}}
-                        <input name="input" type="date" id="date" class="table-element" value="{{date}}">
-                    {{/if}}
                 </td>
             </tr>
             <tr>
@@ -31,20 +23,6 @@
                     {{/each}}
                     {{/if}}
                 </select>
-                </td>
-            </tr>
-            <tr>
-                <th>Староста</th>
-                <td>
-
-                        {{#if student.studentID}}
-                            <input type="hidden" id="student" value="{{student.studentID}}">
-                            <label {{attribute}} name="student" id="student-name">{{student.studentsurname}} {{student.studentname}} {{student.studentmidname}}</label>
-                        {{else}}
-                            <input type="hidden" id="student" >
-                            <label {{attribute}} name="input" id="student-name"></label>
-                        {{/if}}
-                    </label>
                 </td>
             </tr>
             <tr>
@@ -64,12 +42,7 @@
             <tr>
                 <th>Описание</th>
                 <td>
-                    
-                    {{#if class.classdesc}}
                         <textarea {{attribute}} name="input" id="description" class="table-element table-textarea">{{class.classdesc}}</textarea>
-                    {{else}}
-                        <textarea name="input" id="description" class="table-element table-textarea"></textarea>
-                    {{/if}}
                 </td>
             </tr>
         </table>

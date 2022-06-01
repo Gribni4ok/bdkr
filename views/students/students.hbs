@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{title}}</title>
+        <link rel="stylesheet" href="/../../css/main.css">
+        <link rel="stylesheet" href="/../../css/table.css">
+        <link href='https://css.gg/css' rel='stylesheet'>
+        
+    </head>
+    <body>
+        {{> header}}
+        <a href="/students/student/create" class="create_href"><button class="create-button">Добавить студента</button></a>
+        {{> students_table students=students}}
+    </body>
+</html>

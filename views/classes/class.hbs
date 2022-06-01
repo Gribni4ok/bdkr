@@ -10,13 +10,14 @@
     <body>
         {{> header}}
         <div>
-            <input type="hidden" id="id" value="{{class.0.classID}}">
+            <input type="hidden" id="id" value="{{info.classID}}">
         </div>
-        {{> class_table class=info teacher=teacher student=student attribute="readonly disabled"}}
-        {{> students_table students=students}}
-         <label>Режим редактирования</label>
+        {{> class_table class=info teacher=teacher attribute="readonly disabled"}}
+        <label>Режим редактирования</label>
         <input type="checkbox" id="toggle-button" class="toggle-button">
         <button hidden id="update-button">Сохранить</button>
+        {{> students_table students=students}}
+       
     </body>
 </html>
 
@@ -63,7 +64,6 @@
             classID: document.getElementById('id').value,
             classdate: document.getElementById('date').value,
             classname: document.getElementById('name').value,
-            studentID: document.getElementById('student').value,
             courseID: document.getElementById('course').value,
             teacherID: document.getElementById('teacher').value,
             description: document.getElementById('description').value
@@ -79,6 +79,7 @@
             alert("Некорректный год");
             return;
         }
+        if(!date.description) date.description = "";
         if(data.description.length >120) 
         {
             alert("Описание не должно быть длиннее 120 символов");
@@ -96,8 +97,5 @@
                 body: JSON.stringify(data),
                 headers: {'Content-Type': 'application/json'}
             });
-    }
-    document.getElementsByClassName("").onclick = async function(){
-
     }
 </script>

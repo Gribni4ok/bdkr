@@ -1,0 +1,99 @@
+<table>
+    <caption>Студент {{student.studentsurname}} {{student.studentname}}</caption>
+    {{#unless create-check}}
+    <tr>
+        <th>ID студента</th>
+        <td>
+            <input disabled readonly id="id" class="table-element" value="{{student.studentID}}">
+        </td>
+    </tr>
+    {{/unless}}
+    <tr>
+        <th>Полное ФИО</th>
+        <td>
+            <input {{attribute}} name="input" id="fio" class="table-element" value="{{student.studentsurname}} {{student.studentname}} {{student.studentmidname}}">
+        </td>
+    </tr>
+    <tr>
+        <th>Группа</th>
+        <td>
+            <select {{attribute}} name="input" id="class">
+            {{#if student.classID}}
+                <option value = "{{student.classID}}">{{student.classname}}</option>
+            {{else}}
+            {{#each classes}}
+                <option value = "{{this.classID}}">{{this.classname}}</option>
+            {{/each}}
+            {{/if}}
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th>Пол</th>
+        <td>
+            <select {{attribute}} name="input" id="sex">
+                {{#if student.studentsex}}
+                    <option value = "{{student.studentsex}}">{{student.studentsex}}</option>
+                    {{#compareStrings student.studentsex "Мужской"}}
+                        <option value = "Женский">Женский</option>
+                    {{else}}
+                        <option value = "Мужской">Мужской</option>
+                    {{/compareStrings}}
+                {{else}}
+                    <option value = "Мужской">Мужской</option>
+                     <option value = "Женский">Женский</option>
+                {{/if}}
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th>Почта</th>
+        <td>
+            <input {{attribute}} name="input" id="email" class="table-element" value="{{student.studentemail}}">
+        </td>
+    </tr>
+    <tr>
+        <th>Номер телефона</th>
+        <td>
+            <input {{attribute}} name="input" id="phone" class="table-element" value="{{student.studentphone}}">
+        </td>
+    </tr>
+    <tr>
+        <th>Логин</th>
+        <td>
+            <input {{attribute}} name="input" id="login" class="table-element" value="{{student.studentlogin}}">
+        </td>
+    </tr>
+    {{#if create-check}}
+    <tr>
+        <th>Пароль</th>
+        <td>
+            <input id="password" class="table-element">
+        </td>
+    </tr>
+    {{/if}}
+    <tr>
+        <th>ИНН</th>
+        <td>
+            <input {{attribute}} name="input" id="tin" class="table-element" value="{{student.studenttin}}">
+        </td>
+    </tr>
+    <tr>
+        <th>Паспортные данные</th>
+        <td>
+            <input {{attribute}} name="input" id="passport" class="table-element" value="{{student.studentpassport}}">
+        </td>
+    </tr>
+    <tr>
+        <th>Кем выдан паспорт</th>
+        <td>
+            <input {{attribute}} name="input" id="passportby" class="table-element" value="{{student.studentpassportby}}">
+        </td>
+    </tr>
+    <tr>
+        <th>Когда выдан паспорт</th>
+        <td>
+            <input {{attribute}} type="date" name="input" id="passportdate" class="table-element" value="{{student.studentpassportdate}}">
+        </td>
+    </tr>   
+</table>
