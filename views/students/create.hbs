@@ -4,7 +4,6 @@
         <title>{{title}}</title>
         <link rel="stylesheet" href="/../../css/main.css">
         <link rel="stylesheet" href="/../../css/table.css">
-        <link href='https://css.gg/css' rel='stylesheet'>
         
     </head>
     <body>
@@ -56,5 +55,9 @@
             body: JSON.stringify(data),
             headers: {'Content-Type': 'application/json'}
         });
-    }
+    };
+    function auto_grow(element) {
+        element.style.height = "5px";
+        element.style.height = (element.scrollHeight)+"px";
+    };
 </script>

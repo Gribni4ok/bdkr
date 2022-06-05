@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{title}}</title>
+        <link rel="stylesheet" href="/../../css/main.css">
+        <link rel="stylesheet" href="/../../css/table.css">
+        
+    </head>
+    <body>
+        {{> header}}
+        {{>appendix_table create-check="True" studentfio=studentfio}}
+        <input hidden id="studentID" class="appendix-element" value="{{studentID}}">
+        <button id="create-button">Создать</button>
+    </body>
+</html>
+<script>
+document.getElementById('create-button').onclick = async function(){
+    var temp = {};
+    var inputs = document.querySelectorAll('.appendix-element');
+    inputs.forEach(function(input){
+        temp[input.id] = input.value;
+    });
+    
+    if(!temp.name || temp.name.length > 30){alert("Некорректное место обучения");return;}
+    if(!temp.description || temp.description.length > 400){alert("Некорректная специальность");return;}
+    const response = await fetch('/students/appendix/create', {
+        method: 'post',
+        body: JSON.stringify(temp),
+        headers: {'Content-Type': 'application/json'}
+    });
+    };
+    function auto_grow(element) {
+        element.style.height = "5px";
+        element.style.height = (element.scrollHeight)+"px";
+    };
+</script>

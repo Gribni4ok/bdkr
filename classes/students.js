@@ -27,7 +27,15 @@ async function getStudentForID(id){
     .catch(err=>{
         console.log(err);
     })
-    return data[0];
+    var appendixes = await pool.execute(`
+    SELECT *
+    FROM appendixes
+    WHERE studentID = "${id}"
+    `)
+    .catch(err=>{
+        console.log(err);
+    })
+    return {data: data[0], appendixes: appendixes[0]};
 }
 
 async function getStudentUpdateData(){
@@ -38,12 +46,20 @@ async function getStudentUpdateData(){
     .catch(err=>{
         console.log(err);
     })
+    
     return {classes: data[0]};
 }
-async function UpdateStudentForID(data){
+async function updateStudentForID(data){
+    var result;
+    var temp1 = "";
+    var result;
+    if(data.classID != '')
+    { 
+        temp1 = "classID = " + data.classID + ",";
+    }  
     await pool.execute(`
         UPDATE students
-        SET classID = "${data.classID}",
+        SET ${temp1}
         studentsurname = "${data.studentsurname}",
         studentname = "${data.studentname}",
         studentmidname = "${data.studentmidname}",
@@ -56,25 +72,105 @@ async function UpdateStudentForID(data){
         studentpassportdate = "${data.studentpassportdate}"
         WHERE studentID = "${data.studentID}"
     `)
+    .then(()=>{
+        result =true;
+    })
     .catch(err=>{
         console.log(err);
-        return false;
+        result = false;
     });
-    return true;
+    data.appendixes.forEach(async (appendix)=>{
+        await pool.execute(`
+            UPDATE appendixes
+            SET
+            appendixname = "${appendix.name}",
+            appendixdesc = "${appendix.description}"
+            WHERE appendixID = "${appendix.id}"
+        `)
+        .then(()=>{
+            result =true;
+        })
+        .catch(err=>{
+            console.log(err);
+            result = false;
+        });
+    });
+    return result;
 }
-async function CreateStudent(data){
+async function createStudent(data){
+    var temp1 = "";
+    var temp2 = "";
+    var result;
+    if(data.classID != '')
+    { 
+        temp1 = "classID,";
+        temp2 = data.classID + ",";
+    }   
     await pool.execute(`
-  INSERT students(classID, studentsurname, studentname, studentmidname, studentlogin, studentpassword,
+  INSERT students(${temp1} studentsurname, studentname, studentmidname, studentlogin, studentpassword,
     studentsex, studentemail, studentphone, studenttin, studentpassport, studentpassportby, studentpassportdate)
-  VALUES ("${data.classID}", "${data.studentsurname}", "${data.studentname}", "${data.studentmidname}", 
+  VALUES (${temp2} "${data.studentsurname}", "${data.studentname}", "${data.studentmidname}", 
   "${data.studentlogin}", "${data.studentpassword}", "${data.studentsex}", "${data.studentemail}",
    "${data.studentphone}", "${data.studenttin}", "${data.studentpassport}", "${data.studentpassportby}",
     "${data.studentpassportdate}")
 `)
+.then(()=>{
+    result =true;
+})
 .catch(err=>{
-  console.log(err);
-  return false;
+    console.log(err);
+    result = false;
 });
-return true;
+return result;
 }
-module.exports = {getStudents, getStudentForID,getStudentUpdateData, UpdateStudentForID,CreateStudent};
+
+async function createAppendix(data){
+    var result;
+    await pool.execute(`
+        INSERT appendixes(studentID, appendixname, appendixdesc)
+        VALUES ("${data.studentID}","${data.name}","${data.description}")
+    `)
+    .then(()=>{
+        result =true;
+    })
+    .catch(err=>{
+        console.log(err);
+        result = false;
+    });
+    return result;
+}
+
+async function deleteStudentForID(id){
+    var result;
+    await pool.execute(`
+        DELETE 
+        FROM students
+        WHERE studentID = "${id}"
+    `)
+    .then(()=>{
+        result =true;
+    })
+    .catch(err=>{
+        console.log(err);
+        result = false;
+    });
+    return result;
+}
+
+async function deleteAppendixForID(id){
+    var result;
+    await pool.execute(`
+        DELETE 
+        FROM appendixes
+        WHERE appendixID = "${id}"
+    `)
+    .then(()=>{
+        result =true;
+    })
+    .catch(err=>{
+        console.log(err);
+        result = false;
+    });
+    return result;
+}
+module.exports = {getStudents, getStudentForID,getStudentUpdateData, updateStudentForID, createStudent, createAppendix,deleteStudentForID, deleteAppendixForID};

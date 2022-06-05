@@ -3,36 +3,7 @@ const pool = require("./init.js");
 const request= [];
 
 function createTables(){
-  //0 Студент
-    request[request.length] = `create table if not exists students(
-        studentID smallint not null auto_increment,
-        classID tinyint null,
-        studentsurname nvarchar(30) not null,
-        studentname nvarchar(30) not null,
-        studentmidname nvarchar(30),
-        studentlogin varchar(20) not null,
-        studentpassword varchar(20) not null,
-        studentsex nvarchar(15) not null,
-        studentemail nvarchar(30) default 'Не указан',
-        studentphone nvarchar(11) not null,
-        studenttin nvarchar(12) unique not null,
-        studentpassport nvarchar(10) not null,
-        studentpassportby nvarchar(50) not null,
-        studentpassportdate date not null,
-        primary key(studentID),
-        foreign key(classID) references classes(classID) ON DELETE SET NULL,
-        CHECK((studentsurname != '') AND (studentname != '') AND (studentsex != '') 
-        AND (studentphone != '') AND (studenttin != '') AND (studentpassport != '') 
-        AND (studentlogin != '') AND (studentpassword != ''))
-      )`;
-      //1 Социальные льготы
-      request[request.length] =`create table if not exists benefits(
-        benefitID mediumint not null auto_increment,
-        benefitname varchar(30) not null,
-        benefitdate date not null,
-        primary key(benefitID),
-        CHECK(benefitname != '')
-      )`;
+
       //2 Учитель
       request[request.length] =`create table if not exists teachers(
         teacherID tinyint not null auto_increment,
@@ -70,17 +41,17 @@ function createTables(){
       //4 Образование учителей
       request[request.length] = `create table if not exists educations(
         educationID smallint not null auto_increment,
-        teacherID tinyint,
+        teacherID tinyint not null,
         educationbegindate date not null,
         educationenddate date not null,
         educationinstitution nvarchar(50) not null,
-        educationtype nvarchar(30),
+        educationregnumber varchar(13) not null,
         educationspeciality nvarchar(30),
         educationqualification nvarchar(30),
         primary key(educationID),
         foreign key(teacherID) references teachers(teacherID) on delete cascade,
-        CHECK((educationinstitution != '') AND (educationtype != '')
-        AND (educationspeciality !='') AND (educationqualification !=''))
+        CHECK((educationinstitution != '') AND (educationspeciality !='')
+        AND (educationqualification !='') AND (educationregnumber != ''))
         )`;
         
         //5 Связь преподавателей и направлений
@@ -104,15 +75,38 @@ function createTables(){
         foreign key(teacherID) references teachers(teacherID) ON DELETE SET NULL,
         CHECK (classname != '')
         )`;
-/*
-        //7 Связь студентов и студенческих групп
-        request[request.length] = `create table if not exists studentstoclasses(
-        studentID smallint,
-        classID tinyint,
-        foreign key(studentID) references students(studentID) on delete cascade,
-        foreign key(classID) references classes(classID) on delete cascade
-        )`;
-*/
+           //0 Студент
+    request[request.length] = `create table if not exists students(
+      studentID smallint not null auto_increment,
+      classID tinyint null,
+      studentsurname nvarchar(30) not null,
+      studentname nvarchar(30) not null,
+      studentmidname nvarchar(30),
+      studentlogin varchar(20) not null,
+      studentpassword varchar(20) not null,
+      studentsex nvarchar(15) not null,
+      studentemail nvarchar(30) default 'Не указан',
+      studentphone nvarchar(11) not null,
+      studenttin nvarchar(12) unique not null,
+      studentpassport nvarchar(10) not null,
+      studentpassportby nvarchar(50) not null,
+      studentpassportdate date not null,
+      primary key(studentID),
+      foreign key(classID) references classes(classID) ON DELETE SET NULL,
+      CHECK((studentsurname != '') AND (studentname != '') AND (studentsex != '') 
+      AND (studentphone != '') AND (studenttin != '') AND (studentpassport != '') 
+      AND (studentlogin != '') AND (studentpassword != ''))
+    )`;
+    //1 Приложение
+    request[request.length] =`create table if not exists appendixes(
+      appendixID mediumint not null auto_increment,
+      studentID smallint not null,
+      appendixname varchar(30) not null,
+      appendixdesc varchar(400) not null,
+      primary key(appendixID),
+      foreign key(studentID) references students(studentID) ON DELETE CASCADE,
+      CHECK(appendixname != '')
+    )`;
         //8 Времена проведения занятий
         request[request.length] = `create table if not exists timings(
         timingID tinyint not null auto_increment,

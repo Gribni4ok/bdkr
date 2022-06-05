@@ -16,7 +16,6 @@
                 <th>Дата формирования</th>
             </tr>
             {{#each data}}
-             
                 <tr>
                     <td>
                         <a  href="/classes/class/class/{{this.classID}}">
@@ -33,8 +32,23 @@
                         {{this.classdate}}
                         </a>
                     </td>
+                    <td><button onclick="delete_element(this)" id="delete-button" class="table-button" value="{{this.classID}}">Удалить</button></td>
                 </tr>
             {{/each}}
         </table>
     </body>
 </html>
+<script>
+    async function delete_element(elem){
+        var id = elem.value;
+        console.log(id);
+        const response = await fetch('/classes/class/delete/'+id, {
+            method: 'post',
+            headers: {'Content-Type': 'application/json'}
+        });
+        if (response.status == 400) {alert("Ошибка");return;}
+        var tr = elem.closest("tr");
+        console.log(tr);
+        tr.remove();
+    }
+</script>

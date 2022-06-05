@@ -1,0 +1,103 @@
+<table class="main-table fixed">
+    <caption>Преподватель {{teacher.teachersurname}} {{teacher.teachername}}</caption>
+    {{#unless create-check}}
+    <tr>
+        <th>ID преподавателя</th>
+        <td>
+            <input disabled readonly id="id" class="table-element" value="{{teacher.teacherID}}">
+        </td>
+    </tr>
+    {{/unless}}
+    <tr>
+        <th>Полное ФИО</th>
+        <td>
+            <textarea {{attribute}} oninput="auto_grow(this)" name="input" id="fio" class="table-element table-textarea">{{teacher.teachersurname}} {{teacher.teachername}} {{teacher.teachermidname}}</textarea>
+        </td>
+    </tr>
+    <tr>
+        <th>Пол</th>
+        <td>
+            <select {{attribute}} name="input" id="sex">
+                {{#if teacher.teachersex}}
+                    <option value = "{{teacher.teachersex}}">{{teacher.teachersex}}</option>
+                    {{#compareStrings teacher.teachersex "Мужской"}}
+                        <option value = "Женский">Женский</option>
+                    {{else}}
+                        <option value = "Мужской">Мужской</option>
+                    {{/compareStrings}}
+                {{else}}
+                    <option value = "Мужской">Мужской</option>
+                     <option value = "Женский">Женский</option>
+                {{/if}}
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th>Почта</th>
+        <td>
+            <input {{attribute}} name="input" id="email" class="table-element" value="{{teacher.teacheremail}}">
+        </td>
+    </tr>
+    <tr>
+        <th>Номер телефона</th>
+        <td>
+            <input {{attribute}} name="input" id="phone" class="table-element" value="{{teacher.teacherphone}}">
+        </td>
+    </tr>
+    <tr>
+        <th>Логин</th>
+        <td>
+            <input {{attribute}} name="input" id="login" class="table-element" value="{{teacher.teacherlogin}}">
+        </td>
+    </tr>
+    {{#if create-check}}
+    <tr>
+        <th>Пароль</th>
+        <td>
+            <input id="password" class="table-element">
+        </td>
+    </tr>
+    {{/if}}
+    <tr>
+        <th>Стаж работы</th>
+        <td>
+            <input {{attribute}} name="input" id="experience" class="table-element" value="{{teacher.teacherexperience}}">
+        </td>
+    </tr>
+    <tr>
+        <th>Оклад</th>
+        <td>
+            <input {{attribute}} name="input" id="salary" class="table-element" value="{{teacher.teachersalary}}">
+        </td>
+    </tr>
+    <tr>
+        <th>ИНН</th>
+        <td>
+            <input {{attribute}} name="input" id="tin" class="table-element" value="{{teacher.teachertin}}">
+        </td>
+    </tr>
+    <tr>
+        <th>Паспортные данные</th>
+        <td>
+            <input {{attribute}} name="input" id="passport" class="table-element" value="{{teacher.teacherpassport}}">
+        </td>
+    </tr>
+    <tr>
+        <th>Кем выдан паспорт</th>
+        <td>
+            <textarea {{attribute}} oninput="auto_grow(this)" name="input" id="passportby" class="table-element table-textarea">{{teacher.teacherpassportby}}</textarea>
+        </td>
+    </tr>
+    <tr>
+        <th>Когда выдан паспорт</th>
+        <td>
+            <input {{attribute}} type="date" name="input" id="passportdate" class="table-element" value="{{teacher.teacherpassportdate}}">
+        </td>
+    </tr>
+    <tr>
+        <th>Адрес</th>
+        <td>
+            <textarea {{attribute}} oninput="auto_grow(this)" name="input" id="address" class="table-element table-textarea">{{teacher.teacheraddress}}</textarea>
+        </td>
+    </tr>   
+</table>

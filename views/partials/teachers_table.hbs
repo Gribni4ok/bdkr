@@ -1,0 +1,18 @@
+<table>
+    <caption>Список преподавателей</caption>
+        <tr>
+            <th>ID преподавателя</th>
+            <th>ФИО преподавателя</th>
+            <th>Почта</th>
+            <th>Номер телефона</th>
+        </tr>
+        {{#each teachers as |teacher|}}
+        <tr>
+            <td><a  href="/teachers/teacher/teacher/{{teacher.teacherID}}">{{teacher.teacherID}}</a></td>
+            <td><a  href="/teachers/teacher/teacher/{{teacher.teacherID}}">{{teacher.teachersurname}} {{teacher.teachername}} {{teacher.teachermidname}}</a></td>
+            <td><a  href="/teachers/teacher/teacher/{{teacher.teacherID}}">{{teacher.teacheremail}}</a></td>
+            <td><a  href="/teachers/teacher/teacher/{{teacher.teacherID}}">{{teacher.teacherphone}}</a></td>
+            <td><button onclick="delete_element(this)" id="delete-button" class="table-button" value="{{teacher.teacherID}}">Удалить</button></td>
+        </tr>
+        {{/each}}
+</table>

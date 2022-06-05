@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {getClasses,getClassUpdateData, getClassForID, getStudentsForClassID, UpdateClassForID, createClass} = require("../classes/classes.js");
+const {getClasses,getClassUpdateData, getClassForID, getStudentsForClassID, UpdateClassForID, createClass,  deleteClassForID} = require("../classes/classes.js");
 var bodyParser = require('body-parser');
 const req = require("express/lib/request");
 var jsonParser = bodyParser.json();
@@ -33,6 +33,11 @@ router.get("/classes/create", async function(request,response){
 
 router.post("/classes/create", jsonParser, async function(request,response){
     if(!request.body || !await createClass(request.body)) response.sendStatus(400);
+    else response.sendStatus(200);
+});
+
+router.post("/classes/class/delete/:id", async function(request,response){
+    if(!await deleteClassForID(request.params.id)) response.sendStatus(400);
     else response.sendStatus(200);
 });
 

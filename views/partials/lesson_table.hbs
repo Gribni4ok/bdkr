@@ -1,7 +1,5 @@
-<table class="fixed">
+<table class="main-table fixed">
             <caption>Подробная информация</caption>
-            <col width="100px"/>
-            <col width="100px"/>
             <tr>
                 <th>Дата проведенния</th>
                 <td>
@@ -98,11 +96,7 @@
             <tr>
                 <th>Описание</th>
                 <td>
-                    {{#if data.lessondesc}}
-                        <textarea {{attribute}} oninput="auto_grow(this)" name="input" id="description" class="table-element table-textarea">{{data.lessondesc}}</textarea>
-                    {{else}}
-                        <textarea oninput="auto_grow(this)" name="input" id="description" class="table-element table-textarea"></textarea>
-                    {{/if}}
+                    <textarea {{attribute}} oninput="auto_grow(this)" name="input" id="description" class="table-element table-textarea">{{data.lessondesc}}</textarea>
                 </td>
             </tr>
         </table>

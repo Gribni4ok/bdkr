@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{title}}</title>
+        <link rel="stylesheet" href="/../../css/main.css">
+        <link rel="stylesheet" href="/../../css/table.css">
+        
+    </head>
+    <body>
+        {{> header}}
+        {{>education_table create-check="True" teacherfio=teacherfio}}
+        <input hidden id="teacherID" class="education-element" value="{{teacherID}}">
+        <button id="create-button">Создать</button>
+    </body>
+</html>
+<script>
+document.getElementById('create-button').onclick = async function(){
+    var temp = {};
+    var inputs = document.querySelectorAll('.education-element');
+        inputs.forEach(function(input){
+            temp[input.id] = input.value;
+        });
+    var begindate = temp.begindate.split(/[- :]/);
+    var enddate = temp.enddate.split(/[- :]/);
+    var curdate = new Date();
+    if(!temp.begindate || !temp.enddate){
+        alert("Некорректный формат даты");
+        return;
+    }
+    var year = curdate.getFullYear();
+    if(begindate[0] > year || begindate[0] < year-100 || enddate[0] > year || enddate[0] < year-100 ){
+        alert("Некорректный год");
+        return;
+    }
+    if(!/^\d+$/.test(temp.regnumber) || temp.regnumber.length != 13){alert("Некорректный номер регистрации");return;}
+    console.log(temp);
+    if(!temp.institution || temp.institution.length > 50){alert("Некорректное место обучения");return;}
+    if(!temp.speciality || temp.speciality.length > 30){alert("Некорректная специальность");return;}
+    if(!temp.qualification || temp.qualification.length > 30){alert("Некорректная квалификация");return;}
+    const response = await fetch('/teachers/education/create', {
+        method: 'post',
+        body: JSON.stringify(temp),
+        headers: {'Content-Type': 'application/json'}
+    });
+    };
+    function auto_grow(element) {
+        element.style.height = "5px";
+        element.style.height = (element.scrollHeight)+"px";
+    };
+</script>

@@ -8,15 +8,15 @@
     </head>
     <body>
         {{> header}}
-        <a href="/students/student/create" class="create_href"><button class="create-button">Добавить студента</button></a>
-        {{> students_table students=students}}
+        <a href="/teachers/teacher/create" class="create_href"><button class="create-button">Добавить преподавателя</button></a>
+        {{> teachers_table teachers=teachers}}
     </body>
 </html>
 <script>
     async function delete_element(elem){
         var id = elem.value;
         console.log(id);
-        const response = await fetch('/students/student/delete/'+id, {
+        const response = await fetch('/teachers/teacher/delete/'+id, {
             method: 'post',
             headers: {'Content-Type': 'application/json'}
         });
@@ -26,3 +26,4 @@
         tr.remove();
     }
 </script>
+

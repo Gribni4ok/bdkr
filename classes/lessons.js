@@ -1,5 +1,4 @@
 const pool = require("../js/init.js");
-const months = require("../consts/values.js")
 
 async function getLessonsForDate(year, month){
    let data = await pool.execute(`

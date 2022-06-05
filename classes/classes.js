@@ -69,6 +69,7 @@ async function getClassUpdateData(){
   return {courses: courses[0], teachers: teachers[0]}
 }
 async function UpdateClassForID(data){
+  var result;
   if(!data.studentID || data.studentID == '') data.studentID = 0;
   if(!data.teacherID || data.teacherID == '') data.teacherID = 0;
     await pool.execute(`
@@ -81,23 +82,44 @@ async function UpdateClassForID(data){
     WHERE classID = "${data.classID}"
   `)
   .then(()=>{
-    return true;
- })
- .catch(err=>{
-   console.log(err);
-   return false;
- });
- return true;
+    result =true;
+})
+.catch(err=>{
+    console.log(err);
+    result = false;
+});
+ return result;
 }
 async function createClass(data){
+  var result;
   await pool.execute(`
   INSERT classes(courseID, teacherID, classname, classdate, classdesc)
   VALUES ("${data.courseID}","${data.teacherID}","${data.classname}","${data.classdate}","${data.description}")
 `)
+.then(()=>{
+  result =true;
+})
 .catch(err=>{
   console.log(err);
-  return false;
+  result = false;
 });
-return true;
+return result;
 }
-module.exports = {getClasses,getClassUpdateData ,getClassForID,getStudentsForClassID, UpdateClassForID, createClass}
+
+async function deleteClassForID(id){
+  var result;
+  await pool.execute(`
+      DELETE 
+      FROM classes
+      WHERE classID = "${id}"
+  `)
+  .then(()=>{
+      result =true;
+  })
+  .catch(err=>{
+      console.log(err);
+      result = false;
+  });
+  return result;
+}
+module.exports = {getClasses,getClassUpdateData ,getClassForID,getStudentsForClassID, UpdateClassForID, createClass,  deleteClassForID}

@@ -78,6 +78,7 @@ async function getLessonUpdateData(){
 };
 
 async function updateLessonForID(data){
+  var result;
   await pool.execute(`
     UPDATE lessons
     SET lessondateof = "${data.lessondateof}",
@@ -91,26 +92,28 @@ async function updateLessonForID(data){
     WHERE lessonID = "${data.lessonID}"
   `)
   .then(()=>{
-    return true;
- })
- .catch(err=>{
-   console.log(err);
-   return false;
- });
+    result =true;
+})
+.catch(err=>{
+    console.log(err);
+    result = false;
+});
+return result;
 }
 
 async function createLesson(data){
+  var result;
     await pool.execute(`
         INSERT lessons(formatID, audienceID, timingID, typeID, teacherID, themeID, lessondateof, lessondesc)
         VALUES ("${data.formatID}","${data.audienceID}","${data.timingID}","${data.typeID}","${data.teacherID}","${data.themeID}","${data.lessondateof}","${data.description}")
     `)
-    .then(result=>{
-      console.log(result);
-      return true;
-   })
-   .catch(err=>{
-     console.log(err);
-     return false;
-   });
+    .then(()=>{
+      result =true;
+  })
+  .catch(err=>{
+      console.log(err);
+      result = false;
+  });
+  return result;
 }
 module.exports = {getLessonForID, getLessonUpdateData, updateLessonForID, createLesson}

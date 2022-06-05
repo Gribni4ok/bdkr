@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{title}}</title>
+        <link rel="stylesheet" href="/../../css/main.css">
+        <link rel="stylesheet" href="/../../css/table.css">
+        
+    </head>
+    <body>
+        {{> header}}
+        {{>teacher_table create-check="True"}}
+        <button id="create-button">Создать</button>
+    </body>
+</html>
+<script>
+    document.getElementById('create-button').onclick = async function(){
+        var fio = document.getElementById('fio').value.split(/\s+/);
+        if(!fio[0]) {alert("Введите имя");return;}
+        if(!fio[1]) {alert("Введите фамилию");return;}
+        var midname = "";
+        if(fio[2]) midname = fio[2];
+        var data = {
+            teachersurname: fio[0],
+            teachername: fio[1],
+            teachermidname: midname,
+            teachersex: document.getElementById('sex').value,
+            teacheremail: document.getElementById('email').value,
+            teacherlogin: document.getElementById('login').value,
+            teacherpassword: document.getElementById('password').value,
+            teachersalary: document.getElementById('salary').value,
+            teacherexperience: document.getElementById('experience').value,
+            teacherphone: document.getElementById('phone').value,
+            teachertin: document.getElementById('tin').value,
+            teacherpassport: document.getElementById('passport').value,
+            teacherpassportby: document.getElementById('passportby').value,
+            teacherpassportdate: document.getElementById('passportdate').value
+        };
+        if(data.teachersurname.length > 30){alert("Фамилия не должна быть длиннее 30 симоволов"); return;}
+        if(data.teachername.length > 30){alert("Имя не должно быть длиннее 30 симоволов"); return;}
+        if(data.teachermidname.length > 30){alert("Отчество не должно быть длиннее 30 симоволов"); return;}
+        if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(data.teacheremail) || data.teacheremail.length > 30){alert("Неверный email"); return;}
+        if(!/^\d+$/.test(data.teachersalary)){alert("Укажите оклад");return;}
+        if(!/^\d+$/.test(data.teacherphone)){alert("Укажите стаж");return;}
+        if(!/^\d+$/.test(data.teacherphone) || data.teacherphone.length > 11){alert("Некорректный номер телефона");return;}
+        if(!/^\d+$/.test(data.teachertin) || data.teachertin.length != 12){alert("Некорректный ИНН");return;}
+        if(!/^\d+$/.test(data.teacherpassport) || data.teacherpassport.length !=10){alert("Некорректные номер и серия паспорта");return;}
+        if(data.teacherpassportby.lenght > 50){alert("Место выдачи должно быть не длиннее 50 символов");return;}
+        var date = data.teacherpassportdate.split(/[- :]/);
+        if(!data.teacherpassportdate){alert("Некорректный формат даты");return;}
+        var curdate = new Date();
+        if(parseInt(date[0]) > curdate.getFullYear()-14 || parseInt(date[0]) < curdate.getFullYear()-80){alert("Некорректный год");return;}
+        
+        const response = await fetch('/teachers/teacher/create', {
+            method: 'post',
+            body: JSON.stringify(data),
+            headers: {'Content-Type': 'application/json'}
+        });
+    };
+    function auto_grow(element) {
+        element.style.height = "5px";
+        element.style.height = (element.scrollHeight)+"px";
+    };
+</script>

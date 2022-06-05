@@ -1,5 +1,5 @@
 
-body {
+  body {
     display: flex;
     min-height: 100vh;
     align-items: center;
@@ -7,7 +7,7 @@ body {
     flex-direction: column;
     font-family: 'Montserrat', sans-serif;
     font-size: 20px;
-    /*background: linear-gradient(to bottom, #00d2ff, #5238d4);*/
+    background: rgb(255, 255, 255);
     color: rgb(0, 0, 0);
   }
   .create-button{
@@ -21,6 +21,19 @@ body {
     height: 40px;
   }
   .create-button:hover {
+    background-color: #7e6161;
+  }
+  .edit-button{
+    position: fixed;
+    margin-top: 80px;
+    background-color: #d4a1a1;
+    top: 0;
+    margin-left: 20%;
+    cursor: pointer;
+    width: 100px;
+    height: 60px;
+  }
+  .edit-button:hover {
     background-color: #7e6161;
   }
   h1 {

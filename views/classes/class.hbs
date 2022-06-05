@@ -68,9 +68,7 @@
             teacherID: document.getElementById('teacher').value,
             description: document.getElementById('description').value
         };
-        console.log(data);
         var date = data.classdate.split(/[- :]/);
-        console.log(date);
         if(!data.classdate){
             alert("Некорректный формат даты");
             return;

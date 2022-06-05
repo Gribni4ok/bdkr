@@ -4,15 +4,21 @@
         <title>{{title}}</title>
         <link rel="stylesheet" href="/../../css/main.css">
         <link rel="stylesheet" href="/../../css/table.css">
-        <link href='https://css.gg/css' rel='stylesheet'>
         
     </head>
     <body>
         {{> header}}
+        <a href="/students/appendix/create/{{student.studentID}}" class="create_href"><button class="create-button">Добавить приложение</button></a>
         {{> student_table student=student attribute="disabled readonly"}}
         <label>Режим редактирования</label>
         <input type="checkbox" id="toggle-button" class="toggle-button">
         <button hidden id="update-button">Сохранить</button>
+        <h3>Приложения</h3>
+        <div class="table-grid">
+        {{#each appendixes}}
+            {{> appendix_table attribute="readonly disabled" appendix=this}} 
+        {{/each}}
+    </div>
     </body>
 </html>
 
@@ -35,14 +41,13 @@
                 headers: {'Content-Type': 'application/json'}
             });
             const res = await response.json();
-
             var temp = document.getElementById('class');
             res.classes.forEach((clas)=>{
-            let value = clas.classID;
-            let option = clas.classname;
-            if(temp.options[0].value != value)
-                temp.appendChild(new Option(option,value));
-        });
+                let value = clas.classID;
+                let option = clas.classname;
+                if(temp.selectedIndex == -1 || temp.options[0].value != value)
+                    temp.appendChild(new Option(option,value));
+            });
     }
     document.getElementById('update-button').onclick = async function(){
         var fio = document.getElementById('fio').value.split(/\s+/);
@@ -77,10 +82,50 @@
         var curdate = new Date();
         if(parseInt(date[0]) > curdate.getFullYear()-14 || parseInt(date[0]) < curdate.getFullYear()-80){alert("Некорректный год");return;}
         
+        var appendixtables = document.querySelectorAll('.table-grid-element');
+        var appendixes = [];
+        appendixtables.forEach(function(table){
+            var isChanged = false;
+            var temp = {};
+            var inputs = table.querySelectorAll('.appendix-element');
+            inputs.forEach(function(input){
+                if(!isChanged)
+                    if(input.value != input.defaultValue)
+                    {
+                        isChanged = true;
+                    }
+                var id = input.id;
+                temp[id] = input.value;
+            });
+            if(isChanged)
+            {
+                var id = temp.id;
+                var errorstr = "Ошибка в записи номер: " + id + "\n";
+                if(!temp.name || temp.name.length > 30){alert(errorstr+"Некорректное место обучения");return;}
+                if(!temp.description || temp.description.length > 400){alert(errorstr+"Некорректная специальность");return;}
+                appendixes.push(temp);
+            }
+        });
+        data["appendixes"] = appendixes;
+
         const response = await fetch('/students/student/update', {
             method: 'post',
             body: JSON.stringify(data),
             headers: {'Content-Type': 'application/json'}
         });
+    };
+    async function delete_element(elem){
+        var id = elem.value;
+        const response = await fetch('/students/appendix/delete/'+id, {
+            method: 'post',
+            headers: {'Content-Type': 'application/json'}
+        });
+        if (response.status == 400) {alert("Ошибка");return;}
+        var tr = elem.closest("table");
+        tr.remove();
     }
+    function auto_grow(element) {
+        element.style.height = "5px";
+        element.style.height = (element.scrollHeight)+"px";
+        };
 </script>

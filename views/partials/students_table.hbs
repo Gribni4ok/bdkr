@@ -14,6 +14,7 @@
             <td><a  href="/classes/class/class/{{student.classID}}">{{student.classname}}</a></td>
             <td><a  href="/students/student/student/{{student.studentID}}">{{student.studentemail}}</a></td>
             <td><a  href="/students/student/student/{{student.studentID}}">{{student.studentphone}}</a></td>
+            <td><button onclick="delete_element(this)" id="delete-button" class="table-button" value="{{student.studentID}}">Удалить</button></td>
         </tr>
         {{/each}}
 </table>

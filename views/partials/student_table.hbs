@@ -1,4 +1,4 @@
-<table>
+<table class="main-table fixed">
     <caption>Студент {{student.studentsurname}} {{student.studentname}}</caption>
     {{#unless create-check}}
     <tr>
@@ -11,7 +11,7 @@
     <tr>
         <th>Полное ФИО</th>
         <td>
-            <input {{attribute}} name="input" id="fio" class="table-element" value="{{student.studentsurname}} {{student.studentname}} {{student.studentmidname}}">
+            <textarea {{attribute}} oninput="auto_grow(this)" name="input" id="fio" class="table-element table-textarea">{{student.studentsurname}} {{student.studentname}} {{student.studentmidname}}</textarea>
         </td>
     </tr>
     <tr>
@@ -87,7 +87,7 @@
     <tr>
         <th>Кем выдан паспорт</th>
         <td>
-            <input {{attribute}} name="input" id="passportby" class="table-element" value="{{student.studentpassportby}}">
+            <textarea {{attribute}} oninput="auto_grow(this)" name="input" id="passportby" class="table-element table-textarea">{{student.studentpassportby}}</textarea>
         </td>
     </tr>
     <tr>
