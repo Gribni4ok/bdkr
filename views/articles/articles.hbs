@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{{title}}</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/autosize.js/4.0.2/autosize.min.js"></script>
+        <link rel="stylesheet" href="/../../css/main.css">
+        <link rel="stylesheet" href="/../../css/table.css">
+    </head>
+    <body>
+        {{> header}}
+        <div style=" margin-top: 120px;"></div>
+        {{#each articles}}
+            {{> article_table article=this}}
+        {{/each}}
+    </body>
+</html>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    autosize(document.querySelectorAll('#description'));
+}, false);
+</script>

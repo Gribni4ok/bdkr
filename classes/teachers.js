@@ -72,9 +72,6 @@ data.educations.forEach(async (education)=>{
         educationregnumber ="${education.regnumber}"
         WHERE educationID = "${education.id}"
     `)
-    .then(()=>{
-        result =true;
-    })
     .catch(err=>{
         console.log(err);
         result = false;

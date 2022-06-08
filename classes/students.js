@@ -1,4 +1,3 @@
-const async = require("hbs/lib/async");
 const pool = require("../js/init.js");
 
 async function getStudents(){
@@ -50,7 +49,6 @@ async function getStudentUpdateData(){
     return {classes: data[0]};
 }
 async function updateStudentForID(data){
-    var result;
     var temp1 = "";
     var result;
     if(data.classID != '')

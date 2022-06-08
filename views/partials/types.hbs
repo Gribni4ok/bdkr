@@ -1,0 +1,20 @@
+<table class="table-grid-element fixed" name="types">
+    <tr><td colspan="2"><button onclick="add_element(this)" class="table-button">Добавить</button></td></tr>
+    <caption>Типы занятия</caption>
+        <tr>
+            <th>ID</th>
+            <th>Наименование</th>
+        </tr>
+        <tr hidden class="values">
+            <td><div></div></td>
+            <td><input name="input" id="name" class="table-element"></td>
+            <td><button onclick="delete_element(this)" id="delete-button" class="table-button" name="audience">Удалить</button></td>
+        </tr>
+        {{#each types as |type|}}
+        <tr class="values">
+            <td><div>{{type.typeID}}</div></td>
+            <td id={{type.typeID}}><input name="input" id="name" class="table-element" value="{{type.typename}}"></td>
+            <td><button onclick="delete_element(this)" id="delete-button"  name="type" class="table-button" value="{{type.typeID}}">Удалить</button></td>
+        </tr>
+        {{/each}}
+</table>

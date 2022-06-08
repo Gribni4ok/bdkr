@@ -7,7 +7,7 @@
     </head>
     <body>
         {{> header}}
-        <a href="/lessons" class="create_href"><button class="edit-button">Редактировать информацию для занятий</button></a>
+        <a href="/lessons/parameters/edit" class="create_href"><button class="edit-button">Редактировать информацию для занятий</button></a>
         <div>
             <a href="/lessons/lessons/{{year}}-{{monthnumber}}">Назад</a>
         </div>
@@ -46,42 +46,47 @@
             const res = await response.json();
 
             var temp = document.getElementById('teacher');
+            if(temp)
             res.teachers.forEach((teacher)=>{
                 let value = teacher.teacherID;
                 let option = teacher.teachersurname + " " + teacher.teachername + " " + teacher.teachermidname;
-                if(temp.options[0].value != value)
+                if(temp.selectedIndex == -1 || temp.options[0].value != value)
                     temp.appendChild(new Option(option,value));
             });
             
             temp = document.getElementById('type');
+            if(temp)
             res.types.forEach((type)=>{
                 let value = type.typeID;
                 let option = type.typename;
-                if(temp.options[0].value != value)
+                if(temp.selectedIndex == -1 || temp.options[0].value != value)
                     temp.appendChild(new Option(option,value));
             });
 
             temp = document.getElementById('format');
+            if(temp)
             res.formats.forEach((format)=>{
                 let value = format.formatID;
                 let option = format.formatname;
-                if(temp.options[0].value != value)
+                if(temp.selectedIndex == -1 || temp.options[0].value != value)
                     temp.appendChild(new Option(option,value));
             });
 
             temp = document.getElementById('audience');
+            if(temp)
             res.audiences.forEach((audience)=>{
                 let value = audience.audienceID;
                 let option = audience.audiencename;
-                if(temp.options[0].value != value)
+                if(temp.selectedIndex == -1 || temp.options[0].value != value)
                     temp.appendChild(new Option(option,value));
             });
             
             temp = document.getElementById('theme');
+            if(temp)
             res.themes.forEach((theme)=>{
                 let value = theme.themeID;
                 let option = theme.themename;
-                if(temp.options[0].value != value)
+                if(temp.selectedIndex == -1 || temp.options[0].value != value)
                     temp.appendChild(new Option(option,value));
             });
 
@@ -89,7 +94,7 @@
             res.timings.forEach((timing)=>{
                 let value = timing.timingID;
                 let option = timing.timingbegin + " - " + timing.timingend;
-                if(temp.options[0].value != value)
+                if(temp.selectedIndex == -1 || temp.options[0].value != value)
                     temp.appendChild(new Option(option,value));
             });
         };
@@ -105,9 +110,9 @@
                 audienceID: document.getElementById('audience').value,
                 description: document.getElementById('description').value
             };
-            if(data.description.length >100) 
+            if(data.description.length >300) 
             {
-                alert("Описание не должно быть длиннее 100 символов");
+                alert("Описание не должно быть длиннее 300 символов");
                 return;
             }
             else if(data.description.length <1){

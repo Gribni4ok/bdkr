@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{{title}}</title>
+        <link rel="stylesheet" href="/../../css/main.css">
+        <link rel="stylesheet" href="/../../css/table.css">
+    </head>
+    <body>
+        {{> header}}
+        <button id="update-button" class="main-table">Сохранить</button>
+        <div class="table-grid parameters-table-grid">
+        {{> types types=types}}
+        {{> audiences audiences=audiences}}
+        {{> timings timings=timings}}
+        {{> formats formats=formats}}
+        {{> themes themes=themes}}
+        </div>
+    </div>
+    </body>
+</html>
+<script>
+    document.getElementById('update-button').onclick = async function(){
+    var tables = document.querySelectorAll('.table-grid-element');
+    var editdata = {};
+    var createdata = {};
+    tables.forEach(function(table){
+        var name = table.getAttribute('name');
+        var edittemp = [];
+        var createtemp = [];
+        var isChanged = false;
+        var inputs = table.querySelectorAll('.table-element');
+        if(name == "timings")
+        {
+            var first = true;
+            var id;
+            var temp = [];
+            inputs.forEach(function(input){
+                if(input.value)
+                {   
+                    
+                    if(first)
+                    {
+                        id = input.closest("td").getAttribute('id');
+                        if(id) temp.push(id);
+                        temp.push(input.value);
+                        first=false;
+                    }
+                    else{
+                        temp.push(input.value);
+                        if(id) 
+                        {
+                            edittemp.push(temp);
+                        }
+                        else createtemp.push(temp);
+                        temp=[];
+                        id = null;
+                        first=true;
+                    }
+                }
+                });
+            editdata[name] = edittemp;
+            createdata[name] = createtemp;
+            
+        }
+        else
+        {
+            inputs.forEach(function(input){
+                if(input.value && input.value != input.defaultValue)
+                {   
+                    var id = input.closest("td").getAttribute('id');
+                    var temp = [];
+                
+                    if(id)
+                    {
+                        temp.push(id);
+                        temp.push(input.value);
+                        edittemp.push(temp);
+                    }
+                    else 
+                    {
+                        temp.push(input.value);
+                        createtemp.push(temp);
+                    }
+                }
+                });
+            editdata[name] = edittemp;
+            createdata[name] = createtemp;
+        }
+        
+    });
+        console.log(editdata);
+        console.log(createdata);
+    data = {editdata: editdata, createdata: createdata};
+    const response = await fetch('/lessons/parameters/edit', {
+        method: 'post',
+        body: JSON.stringify(data),
+        headers: {'Content-Type': 'application/json'}
+    });
+    
+    }
+    var deletebut = document.getElementById('delete-button');
+    async function delete_element(elem){
+        if(elem.value){
+            var id = elem.value;
+            var data = {name: elem.getAttribute('name')};
+            console.log(name);
+            const response = await fetch('/lessons/parameters/delete/'+ id, {
+                method: 'post',
+                body:JSON.stringify(data),
+                headers: {'Content-Type': 'application/json'}
+            });
+            if (response.status == 400) {alert("Ошибка");return;}
+        }
+        var tr = elem.closest("tr");
+        tr.remove();
+    }
+    function add_element(elem){
+       var table = elem.closest("table");
+       var row = table.insertRow(3);
+       row.insertCell(0);
+       var tr = table.querySelector(".values");
+       var inputs = tr.querySelectorAll(".table-element");
+       inputs.forEach(function(input){
+            var el = input.cloneNode(true);
+            el.value = "";
+            row.insertCell().append(el);
+        });
+       var but = deletebut.cloneNode(true);
+       row.insertCell().append(but);
+    }
+</script>

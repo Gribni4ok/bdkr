@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{{title}}</title>
+        <link rel="stylesheet" href="/../../css/login.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1>Регистрация админа</h1>
+            <p>Пожалуйста заполните поля ниже.</p>
+            <hr>
+
+            <label for="email"><b>Почта</b></label>
+            <input type="text" placeholder="Введите почту" name="email" id="email" required>
+
+            <label for="login"><b>Логин</b></label>
+            <input type="text" placeholder="Введите логин" name="login" id="login" required>
+
+            <label for="psw"><b>Пароль</b></label>
+            <input type="password" placeholder="Введите пароль" name="psw" id="psw" required>
+
+            <label for="psw-repeat"><b>Повторите пароль</b></label>
+            <input type="password" placeholder="Повторите пароль" name="psw-repeat" id="psw-repeat" required>
+            <hr>
+
+            <button id="reg-button" class="registerbtn">Регистрация</button>
+        </form>
+    </body>
+</html>
+<script>
+    document.getElementById('reg-button').onclick = async function() {
+        var data={
+            adminemail: document.getElementById('email').value,
+            adminlogin: document.getElementById('login').value,
+            adminpassword: document.getElementById('psw').value
+        }
+        console.log(data);
+        if(!data.adminlogin || /\s/g.test(data.adminlogin) || data.adminlogin.lenght> 20){alert("Некорректный логин");return;}
+        if(!data.adminemail || /\s/g.test(data.adminemail) || data.adminemail.lenght> 20){alert("Некорректная почта");return;}
+        if(!data.adminpassword || /\s/g.test(data.adminpassword) || data.adminpassword.lenght> 20){alert("Некорректный пароль");return;}
+        if(data.adminpassword != document.getElementById('psw-repeat').value){alert("Пароли не совпадают"); return;}
+
+        const response = await fetch('/registration', {
+            method: 'post',
+            body: JSON.stringify(data),
+            headers: {'Content-Type': 'application/json'}
+        });
+    }   
+
+</script>

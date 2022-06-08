@@ -9,20 +9,45 @@
     <body>
         {{> header}}
         <a href="/students/student/create" class="create_href"><button class="create-button">Добавить студента</button></a>
+        <input type="text" id="filter-input" onkeyup="applyFilter()" placeholder="Поиск...">
         {{> students_table students=students}}
     </body>
 </html>
 <script>
     async function delete_element(elem){
         var id = elem.value;
-        console.log(id);
         const response = await fetch('/students/student/delete/'+id, {
             method: 'post',
             headers: {'Content-Type': 'application/json'}
         });
         if (response.status == 400) {alert("Ошибка");return;}
         var tr = elem.closest("tr");
-        console.log(tr);
         tr.remove();
+    }
+    function applyFilter() {
+    // Declare variables
+    var input, filter, table, tr, i, txtValue;
+    input = document.getElementById("filter-input");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("table");
+    tr = table.getElementsByTagName("tr");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+            var endLoop = false;
+            tdAll = tr[i].getElementsByTagName("td");
+            for(let td of tdAll)
+            if(!endLoop)
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                    endLoop = true;
+                } 
+                else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
     }
 </script>

@@ -1,0 +1,29 @@
+    <table class="article-table fixed">
+        {{#unless create-check}}
+        <tr>
+            <th>Дата публикации</th>
+            <td><input disabled readonly id="date" class="table-element" value="{{article.articledate}}"></td>
+        </tr>
+        <tr>
+            <th>ID записи</th>
+            <td><input disabled readonly id="id" class="table-element" value="{{article.articleID}}"></td>
+        </tr>
+        {{/unless}}
+        <tr>
+            <th>Заголовок</th>
+            <td>
+                <textarea {{attribute}} oninput="auto_grow(this)" name="input" id="name" class="table-element table-textarea">{{article.articlename}}</textarea>
+            </td>
+        </tr>
+        <tr>
+            <th>Описание</th>
+            <td>
+                <textarea {{attribute}} oninput="auto_grow(this)" name="input" id="description" class="table-element table-textarea">{{article.articledesc}}</textarea>
+            </td>
+        </tr>
+        {{#unless create-check}}
+        <tr> 
+            <td colspan="2"><button onclick="delete_element(this)" id="delete-button" class="table-button" value="{{article.articleID}}">Удалить</button></td>
+        </tr>
+        {{/unless }}
+    </table>

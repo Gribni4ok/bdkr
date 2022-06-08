@@ -1,0 +1,23 @@
+<table class="table-grid-element fixed" name="timings">
+    <tr><td colspan="3"><button onclick="add_element(this)" class="table-button">Добавить</button></td></tr>
+    <caption>Время проведения</caption>
+        <tr>
+            <th>ID</th>
+            <th>Начало</th>
+            <th>Окончание</th>
+        </tr>
+        <tr hidden class="values">
+            <td><div></div></td>
+            <td><input type="time" name="input" id="begin" class="table-element"></td>
+            <td><input type="time" name="input" id="end" class="table-element"></td>
+            <td><button onclick="delete_element(this)" id="delete-button"  name="timing" class="table-button">Удалить</button></td>
+        </tr>
+        {{#each timings as |timing|}}
+        <tr class="values">
+            <td><div>{{timing.timingID}}</div></td>
+            <td id={{timing.timingID}}><input type="time" name="input" id="begin" class="table-element" value="{{timing.timingbegin}}"></td>
+            <td><input type="time" name="input" id="end" class="table-element" value="{{timing.timingend}}"></td>
+            <td><button onclick="delete_element(this)" id="delete-button"  name="timing" class="table-button" value="{{timing.timingID}}">Удалить</button></td>
+        </tr>
+        {{/each}}
+</table>

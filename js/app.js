@@ -6,6 +6,8 @@ const lessonRoutes = require("../routes/lesson-routes.js");
 const classRoutes = require("../routes/class-routes.js");
 const studentRoutes = require("../routes/student-routes.js");
 const teacherRoutes = require("../routes/teacher-routes.js");
+const articleRoutes = require("../routes/article-routes.js");
+const loginRoutes = require("../routes/login-routes.js");
 
 createTables();
 
@@ -19,6 +21,8 @@ app.use(lessonRoutes);
 app.use(classRoutes);
 app.use(studentRoutes);
 app.use(teacherRoutes);
+app.use(articleRoutes);
+app.use(loginRoutes);
 
 hbs.registerHelper('compareStrings', function(p, q, options) {
   return (p == q) ? options.fn(this) : options.inverse(this);
@@ -29,42 +33,10 @@ app.get("/list",function(_,response){
   response.render("list.hbs");
 });
 
-app.get("/",function(_, response){
-   pool.execute("SELECT * FROM logins")
-   .then(result=>{
-      response.render("list.hbs",{logins: result[0]});
-      console.log(result[0]);
-   })
-   .catch(err=>{
-     console.log(err);
-   });
-  });
-
-  app.get("/control",function(request,response){
-  response.render("control.hbs"); 
-  });
-
-  app.use("/home",function(_,response){
-    const title = "Домашняя страница";
-    response.render("home.hbs",{title});
-  });
-
-  const urlencodedParser = express.urlencoded({extended:false});
-
-  app.post("/",urlencodedParser,function(request,response){
-      if(!request.body) return response.sendStatus(400);
-      console.log("В запросе содержатся данные: " + request.body.login);
-  })
-
-  const jsonParser = express.json()
-
-  app.post("/control",jsonParser, function(request,response){
-    console.log("АЛО");
-    if(!request.body) return response.sendStatus(400);
-    else console.log(request.body);
-    
-    
-  });
+app.use("/home",function(_,response){
+  const title = "Домашняя страница";
+  response.render("home.hbs",{title});
+});
 
 app.listen(3000);
 

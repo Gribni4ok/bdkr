@@ -10,17 +10,17 @@ const pool = require("../js/init.js");
     formats.formatID, formats.formatname,
     timings.timingID, timings.timingbegin, timings.timingend
     FROM lessons 
-    INNER JOIN themes
+    LEFT JOIN themes
     ON lessons.themeID = themes.themeID
-    INNER JOIN teachers
+    LEFT JOIN teachers
     ON lessons.teacherID = teachers.teacherID
-    INNER JOIN types
+    LEFT JOIN types
     ON lessons.typeID = types.typeID
-    INNER JOIN audiences
+    LEFT JOIN audiences
     ON lessons.audienceID = audiences.audienceID
-    INNER JOIN formats
+    LEFT JOIN formats
     ON lessons.formatID = formats.formatID
-    INNER JOIN timings
+    LEFT JOIN timings
     ON lessons.timingID = timings.timingID
     WHERE lessonid ='${id}' 
     `)
@@ -116,4 +116,151 @@ async function createLesson(data){
   });
   return result;
 }
-module.exports = {getLessonForID, getLessonUpdateData, updateLessonForID, createLesson}
+
+async function deleteParameterForID(type,id){
+  var result;
+  await pool.execute(`
+      DELETE 
+      FROM ${type}s
+      WHERE ${type}ID = "${id}"
+  `)
+  .then(()=>{
+      result =true;
+  })
+  .catch(err=>{
+      console.log(err);
+      result = false;
+  });
+  return result;
+}
+async function editParameters(data){
+  var result;
+  if(data.createdata.audiences.length > 0)
+    await pool.query(`
+      INSERT INTO audiences(audiencename)
+      VALUES ?`,[data.createdata.audiences])
+    .then(()=>{
+      result =true;
+    })
+    .catch(err=>{
+        console.log(err);
+        result = false;
+    });
+  if(data.createdata.formats.length > 0)
+    await pool.query(`
+      INSERT INTO formats(formatname)
+      VALUES ?`,[data.createdata.formats])
+    .then(()=>{
+      result =true;
+    })
+    .catch(err=>{
+        console.log(err);
+        result = false;
+    });
+  if(data.createdata.types.length > 0)
+    await pool.query(`
+      INSERT INTO types(typename)
+      VALUES ?`,[data.createdata.types])
+    .then(()=>{
+      result =true;
+    })
+    .catch(err=>{
+        console.log(err);
+        result = false;
+    });
+  if(data.createdata.themes.length > 0)
+    await pool.query(`
+      INSERT INTO themes(themename)
+      VALUES ?`,[data.createdata.themes])
+    .then(()=>{
+      result =true;
+    })
+    .catch(err=>{
+        console.log(err);
+        result = false;
+    });
+  if(data.createdata.timings.length > 0)
+    await pool.query(`
+      INSERT INTO timings(timingbegin,timingend)
+      VALUES ?`,[data.createdata.timings])
+    .then(()=>{
+      result =true;
+    })
+    .catch(err=>{
+        console.log(err);
+        result = false;
+    });
+
+  for(const element of data.editdata.audiences){
+    await pool.execute(`
+    UPDATE audiences
+    SET audiencename = "${element[1]}"
+    WHERE audienceID = "${element[0]}"`)
+  .then(()=>{
+    result =true;
+  })
+  .catch(err=>{
+      console.log(err);
+      result = false;
+  });
+  };
+  
+  
+  for(const element of data.editdata.formats){
+    await pool.execute(`
+    UPDATE formats
+    SET formatname = "${element[1]}"
+    WHERE formatID = "${element[0]}"`)
+  .then(()=>{
+    result =true;
+  })
+  .catch(err=>{
+      console.log(err);
+      result = false;
+  });
+  };
+
+  for(const element of data.editdata.types){
+    await pool.execute(`
+    UPDATE types
+    SET typename = "${element[1]}"
+    WHERE typeID = "${element[0]}"`)
+  .then(()=>{
+    result =true;
+  })
+  .catch(err=>{
+      console.log(err);
+      result = false;
+  });
+  };
+
+  for(const element of data.editdata.themes){
+    await pool.execute(`
+    UPDATE themes
+    SET themename = "${element[1]}"
+    WHERE themeID = "${element[0]}"`)
+  .then(()=>{
+    result =true;
+  })
+  .catch(err=>{
+      console.log(err);
+      result = false;
+  });
+  };
+  for(const element of data.editdata.timings){
+    await pool.execute(`
+    UPDATE timings
+    SET timingbegin = "${element[1]}",
+        timingend = "${element[2]}"
+    WHERE timingID = "${element[0]}"`)
+    .then(()=>{
+      result =true;
+    })
+    .catch(err=>{
+        console.log(err);
+        result = false;
+    });
+  };
+  return result;
+}
+module.exports = {getLessonForID, getLessonUpdateData, updateLessonForID, createLesson,deleteParameterForID,editParameters}

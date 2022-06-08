@@ -7,7 +7,7 @@
     <body>
         {{> header}}
         <a href="/lessons/create" class="create_href"><button class="create-button">Добавить занятие</button></a>
-        <a href="/lessons" class="create_href"><button class="edit-button">Редактировать информацию для занятий</button></a>
+        <a href="/lessons/parameters/edit" class="create_href"><button class="edit-button">Редактировать информацию для занятий</button></a>
         <h2>Расписание</h2>
     <div>
       <script>
@@ -27,7 +27,7 @@
        var prev = "/lessons/lessons/"+prevyear + "-"+prevmonth;
        var next = "/lessons/lessons/"+nextyear + "-"+nextmonth;
       document.write(
-        '<a href="' + prev + '">Пред</a>' + "{{month}}" + '<a href="' + next + '">След</a>'
+        '<a href="' + prev + '">Пред </a>' + "{{month}}"+ " {{year}}" + '<a href="' + next + '"> След</a>'
         );
       </script>
     </div>

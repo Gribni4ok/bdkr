@@ -35,8 +35,8 @@
             studentpassportby: document.getElementById('passportby').value,
             studentpassportdate: document.getElementById('passportdate').value
         };
-        if(!data.studentlogin || data.studentlogin.lenght> 20){alert("Некорректный логин");return;}
-        if(!data.studentpassword || data.studentpassword.length>20 || data.studentpassword.length<5){alert("Некорректный пароль");return;}
+        if(!data.studentlogin || /\s/g.test(data.studentlogin) || data.studentlogin.lenght> 20){alert("Некорректный логин");return;}
+        if(!data.studentpassword || /\s/g.test(data.studentpassword) || data.studentpassword.length>20 || data.studentpassword.length<5){alert("Некорректный пароль");return;}
         if(data.studentsurname.length > 30){alert("Фамилия не должна быть длиннее 30 симоволов"); return;}
         if(data.studentname.length > 30){alert("Имя не должно быть длиннее 30 симоволов"); return;}
         if(data.studentmidname.length > 30){alert("Отчество не должно быть длиннее 30 симоволов"); return;}
@@ -44,7 +44,7 @@
         if(!/^\d+$/.test(data.studentphone) || data.studentphone.length > 11){alert("Некорректный номер телефона");return;}
         if(!/^\d+$/.test(data.studenttin) || data.studenttin.length != 12){alert("Некорректный ИНН");return;}
         if(!/^\d+$/.test(data.studentpassport) || data.studentpassport.length !=10){alert("Некорректные номер и серия паспорта");return;}
-        if(data.studentpassportby.lenght > 50){alert("Место выдачи должно быть не длиннее 50 символов");return;}
+        if(!data.studentpassportby /\s/g.test(data.studentpassportby) || data.studentpassportby.lenght > 50){alert("Место выдачи должно быть не длиннее 50 символов");return;}
         var date = data.studentpassportdate.split(/[- :]/);
         if(!data.studentpassportdate){alert("Некорректный формат даты");return;}
         var curdate = new Date();

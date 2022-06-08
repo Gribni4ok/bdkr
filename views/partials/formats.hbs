@@ -1,0 +1,20 @@
+<table class="table-grid-element fixed" name="formats">
+    <tr><td colspan="2"><button onclick="add_element(this)" class="table-button">Добавить</button></td></tr>
+    <caption>Форматы занятия</caption>
+        <tr>
+            <th>ID</th>
+            <th>Наименование</th>
+        </tr>
+        <tr hidden class="values">
+            <td><div></div></td>
+            <td><input name="input" id="name" class="table-element"></td>
+            <td><button onclick="delete_element(this)" id="delete-button" class="table-button" name="audience">Удалить</button></td>
+        </tr>
+        {{#each formats as |format|}}
+        <tr class="values">
+            <td><div>{{format.formatID}}</div></td>
+            <td id={{format.formatID}}><input name="input" id="name" class="table-element" value="{{format.formatname}}"></td>
+            <td><button onclick="delete_element(this)" id="delete-button"  name="format" class="table-button" value="{{format.formatID}}">Удалить</button></td>
+        </tr>
+        {{/each}}
+</table>

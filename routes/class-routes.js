@@ -2,12 +2,12 @@ const express = require("express");
 const router = express.Router();
 const {getClasses,getClassUpdateData, getClassForID, getStudentsForClassID, UpdateClassForID, createClass,  deleteClassForID} = require("../classes/classes.js");
 var bodyParser = require('body-parser');
-const req = require("express/lib/request");
 var jsonParser = bodyParser.json();
 
 router.get("/classes",async function(request,response){
     var data = await getClasses();
-    response.render("classes/classes.hbs", {data: data});
+    const title = "Учебные группы";
+    response.render("classes/classes.hbs", {data: data,title: title});
 });
 
 router.post("/classes/class/update/get", async function(request,response){
@@ -21,14 +21,16 @@ router.post("/classes/class/update", jsonParser, async function(request,response
 
 router.get("/classes/class/class/:id", async function(request,response){
     const id = request.params.id;
+    const title = "Группа номер " + id;
     var data = await getClassForID(id);
     var students = await getStudentsForClassID(id);
-    response.render("classes/class.hbs", {info: data.info[0], teacher: data.teacher[0], students: students});
+    response.render("classes/class.hbs", {info: data.info[0], teacher: data.teacher[0], students: students,title:title});
 });
 
 router.get("/classes/create", async function(request,response){
     var data = await getClassUpdateData();
-    response.render("classes/create.hbs", {data: data});
+    const title = "Новая группа";
+    response.render("classes/create.hbs", {data: data,title:title});
 });
 
 router.post("/classes/create", jsonParser, async function(request,response){

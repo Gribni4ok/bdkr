@@ -7,17 +7,20 @@ const {getStudents, getStudentForID,getStudentUpdateData, updateStudentForID, cr
 
 router.get("/students", async function(request,response){
     var data = await getStudents();
-    response.render("students/students.hbs", {students: data});
+    const title = "Список студентов";
+    response.render("students/students.hbs", {students: data,title:title});
 });
 
 router.get("/students/student/student/:id", async function(request,response){
     var data = await getStudentForID(request.params.id);
-    response.render("students/student.hbs", {student: data.data[0], appendixes: data.appendixes});
+    const title = data.data[0].studentsurname + " " + data.data[0].studentname + " " + data.data[0].studentmidname;
+    response.render("students/student.hbs", {student: data.data[0], appendixes: data.appendixes,title:title});
 });
 
 router.get("/students/student/create", async function(request,response){
     var data = await getStudentUpdateData();
-    response.render("students/create.hbs",{classes:data.classes});
+    const title = "Новый студент";
+    response.render("students/create.hbs",{classes:data.classes,title:title});
 });
 
 router.post("/students/student/create",jsonParser ,async function(request,response){
@@ -38,8 +41,9 @@ router.post("/students/student/update", jsonParser, async function(request,respo
 
 router.get("/students/appendix/create/:id",async function(request,response){
     var data = await getStudentForID(request.params.id);
+    const title = "Новое приложение";
     var fio = data.data[0].studentsurname + " " + data.data[0].studentname + " " + data.data[0].studentmidname;
-    response.render("students/appendixes/create.hbs", {studentfio: fio, studentID: request.params.id});
+    response.render("students/appendixes/create.hbs", {studentfio: fio, studentID: request.params.id,title:title});
 });
 
 router.post("/students/appendix/create", jsonParser, async function(request,response){
