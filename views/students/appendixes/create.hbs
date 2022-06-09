@@ -7,7 +7,7 @@
         
     </head>
     <body>
-        {{> header}}
+        {{> header token=token}}
         {{>appendix_table create-check="True" studentfio=studentfio}}
         <input hidden id="studentID" class="appendix-element" value="{{studentID}}">
         <button id="create-button">Создать</button>

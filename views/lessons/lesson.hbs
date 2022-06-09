@@ -6,21 +6,22 @@
         <link rel="stylesheet" href="/../../css/table.css">
     </head>
     <body>
-        {{> header}}
+        {{> header token=token}}
+        {{#isGreater token.role "1"}}
         <a href="/lessons/parameters/edit" class="create_href"><button class="edit-button">Редактировать информацию для занятий</button></a>
-        <div>
-            <a href="/lessons/lessons/{{year}}-{{monthnumber}}">Назад</a>
-        </div>
+        {{/isGreater}}
         <div>
             <input type="hidden" id="id" value="{{lesson.0.lessonID}}">
         </div>
     <div>
         {{#each lesson}}
-        {{> lesson_table data=this attribute="disabled readonly"}}
+        {{> lesson_table data=this attribute="disabled readonly" token=../token}}
         {{/each}}
+        {{#isGreater token.role "1"}}
         <label>Режим редактирования</label>
         <input type="checkbox" id="toggle-button" class="toggle-button">
         <button hidden id="update-button">Сохранить</button>
+        {{/isGreater}}
     </div>
     </body>
 </html>

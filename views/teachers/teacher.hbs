@@ -7,16 +7,20 @@
         
     </head>
     <body>
-        {{> header}}
+        {{> header token=token}}
+        {{#isGreater token.role "1"}}
         <a href="/teachers/education/create/{{teacher.teacherID}}" class="create_href"><button class="create-button">Добавить образование</button></a>
-        {{> teacher_table teacher=teacher attribute="disabled readonly"}}
+        {{/isGreater}}
+        {{> teacher_table teacher=teacher attribute="disabled readonly" token=token}}
+        {{#isGreater token.role "1"}}
         <label>Режим редактирования преподавателя</label>
         <input type="checkbox" id="toggle-teacher-button" class="toggle-button">
         <button hidden id="update-teacher-button">Сохранить</button>
+        {{/isGreater}}
         <h3>Полученное образование</h3>
     <div class="table-grid">
         {{#each educations}}
-            {{> education_table attribute="readonly disabled" education=this}} 
+            {{> education_table attribute="readonly disabled" education=this token=../token}} 
         {{/each}}
     </div>
     </body>

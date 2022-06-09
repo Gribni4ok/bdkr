@@ -7,8 +7,8 @@
         
     </head>
     <body>
-        {{> header}}
-        {{>teacher_table create-check="True"}}
+        {{> header token=token}}
+        {{>teacher_table create-check="True" token=token}}
         <button id="create-button">Создать</button>
     </body>
 </html>

@@ -7,7 +7,7 @@
         
     </head>
     <body>
-        {{> header}}
+        {{> header token=token}}
         {{>education_table create-check="True" teacherfio=teacherfio}}
         <input hidden id="teacherID" class="education-element" value="{{teacherID}}">
         <button id="create-button">Создать</button>

@@ -48,13 +48,11 @@ async function createArticle(data){
 
 async function updateArticleForID(data){
     var result;
-    if(!data.studentID || data.studentID == '') data.studentID = 0;
-    if(!data.teacherID || data.teacherID == '') data.teacherID = 0;
       await pool.execute(`
       UPDATE articles
       SET 
           articledesc = "${data.description}",
-          articlename = "${data.classname}"
+          articlename = "${data.name}"
       WHERE articleID = "${data.ID}"
     `)
     .then(()=>{

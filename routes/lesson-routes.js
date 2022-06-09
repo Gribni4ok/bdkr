@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const {getLessonsForDate} = require("../classes/lessons.js");
 const {getLessonForID, getLessonUpdateData, updateLessonForID,createLesson, deleteParameterForID, editParameters} = require("../classes/lesson.js");
-const {verifyToken, checkIfAdmin, checkIfTeacher} = require("../classes/logins.js");
+const {verifyToken, checkIfAdmin, checkIfTeacher,fakeToken} = require("../classes/logins.js");
 const months = require("../consts/values.js");
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
@@ -15,12 +15,12 @@ router.get("/lessons/lessons/:id",verifyToken, async function(request,response){
   var data = await getLessonsForDate(year,monthnumber);
   let monthname = months[monthnumber-1];
   
-  response.render("lessons/lessons.hbs",{lessons: data, month: monthname,monthnumber: monthnumber,year: year,title});
+  response.render("lessons/lessons.hbs",{lessons: data, month: monthname,monthnumber: monthnumber,year: year,title, token: fakeToken});
 });
 
 router.get("/lessons/create",verifyToken,checkIfAdmin, async function(request,response){
     var data = await getLessonUpdateData();
-    response.render("lessons/create.hbs", {dat: data});
+    response.render("lessons/create.hbs", {dat: data, token: fakeToken});
 });
 
 router.post("/lessons/create", jsonParser,async function(request,response){
@@ -36,7 +36,7 @@ router.get("/lessons/lesson/:id",verifyToken, async function(request,response){
   let monthnumber = dateTimeParts[1];
   let monthname = months[monthnumber];
   let year = dateTimeParts[0];
-  response.render("lessons/lesson.hbs", {lesson: data, month: monthname, monthnumber: monthnumber,year: year, title: title});
+  response.render("lessons/lesson.hbs", {lesson: data, month: monthname, monthnumber: monthnumber,year: year, title: title, token: request.fakeToken});
 });
 
 router.post("/lessons/lesson/update",jsonParser, async function(request,response){
@@ -52,7 +52,7 @@ router.post("/lessons/lesson/update/get",jsonParser, async function(request,resp
 router.get("/lessons/parameters/edit",verifyToken,checkIfAdmin, async function(request,response){
     var data = await getLessonUpdateData();
     const title = "Параметры занятий";
-    response.render("lessons/parameters/edit.hbs",{themes: data.themes, timings: data.timings, formats: data.formats, types: data.types, audiences: data.audiences, title: title});
+    response.render("lessons/parameters/edit.hbs",{themes: data.themes, timings: data.timings, formats: data.formats, types: data.types, audiences: data.audiences, title: title, token: request.fakeToken});
 });
 
 router.post("/lessons/parameters/edit",jsonParser, async function(request,response){

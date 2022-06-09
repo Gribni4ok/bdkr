@@ -7,8 +7,8 @@
         
     </head>
     <body>
-        {{> header}}
-        <a href="/students/student/create" class="create_href"><button class="create-button">Добавить студента</button></a>
+        {{> header token=token}}
+        {{#isGreater token.role "1"}}<a href="/students/student/create" class="create_href"><button class="create-button">Добавить студента</button></a>{{/isGreater}}
         <input type="text" id="filter-input" onkeyup="applyFilter()" placeholder="Поиск...">
         {{> students_table students=students}}
     </body>

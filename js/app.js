@@ -29,6 +29,10 @@ app.use(coursesRoutes);
 hbs.registerHelper('compareStrings', function(p, q, options) {
   return (p == q) ? options.fn(this) : options.inverse(this);
 });
+
+hbs.registerHelper('isGreater', function(p, q, options) {
+  return (parseInt(p) > parseInt(q)) ? options.fn(this) : options.inverse(this);
+});
 app.use(express.static('public'));
 
 app.get("/list",function(_,response){

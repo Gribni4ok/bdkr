@@ -7,10 +7,12 @@
         
     </head>
     <body>
-        {{> header}}
+        {{> header token=token}}
+        {{#isGreater token.role "1"}}
         <a href="/teachers/teacher/create" class="create_href"><button class="create-button">Добавить преподавателя</button></a>
+        {{/isGreater}}
         <input type="text" id="filter-input" onkeyup="applyFilter()" placeholder="Поиск...">
-        {{> teachers_table teachers=teachers}}
+        {{> teachers_table teachers=teachers token=token}}
     </body>
 </html>
 <script>

@@ -1,12 +1,14 @@
 <table class="main-table fixed">
     <caption>Преподватель {{teacher.teachersurname}} {{teacher.teachername}}</caption>
     {{#unless create-check}}
+    {{#isGreater token.role "1"}}
     <tr>
         <th>ID преподавателя</th>
         <td>
             <input disabled readonly id="id" class="table-element" value="{{teacher.teacherID}}">
         </td>
     </tr>
+    {{/isGreater}}
     {{/unless}}
     <tr>
         <th>Полное ФИО</th>
@@ -44,6 +46,7 @@
             <input {{attribute}} name="input" id="phone" class="table-element" value="{{teacher.teacherphone}}">
         </td>
     </tr>
+    {{#isGreater token.role "1"}}
     <tr>
         <th>Логин</th>
         <td>
@@ -100,4 +103,5 @@
             <textarea {{attribute}} oninput="auto_grow(this)" name="input" id="address" class="table-element table-textarea">{{teacher.teacheraddress}}</textarea>
         </td>
     </tr>   
+    {{/isGreater}}
 </table>

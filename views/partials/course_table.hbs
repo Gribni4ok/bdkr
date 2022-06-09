@@ -1,10 +1,20 @@
 <table class="article-table fixed">
         {{#unless create-check}}
+        {{#isGreater token.role "1"}}
+        {{#if edit}}
+        <tr>
+            <th>ID записи</th>
+            <td style="width: 80%">
+            <input disabled readonly id="id" class="table-element" value="{{course.courseID}}"></td>
+        </tr>
+        {{else}}
         <tr>
             <th>ID записи</th>
             <td style="width: 80%"><a class="article-href" href="courses/course/course/{{course.courseID}}">
             <input disabled readonly id="id" class="table-element" value="{{course.courseID}}"></a></td>
         </tr>
+        {{/if}}
+        {{/isGreater}}
         {{/unless}}
         <tr>
             <th>Наименование</th>
@@ -30,6 +40,7 @@
                 <input {{attribute}}name="input" id="time" class="table-element" value="{{course.coursetime}}">
             </td>
         </tr>
+        {{#isGreater token.role "1"}}
         {{#unless create-check}}
         {{#unless edit}}
         <tr> 
@@ -37,4 +48,5 @@
         </tr>
         {{/unless}}
         {{/unless }}
+        {{/isGreater}}
     </table>

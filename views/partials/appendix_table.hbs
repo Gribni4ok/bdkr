@@ -17,9 +17,11 @@
                 <textarea {{attribute}} oninput="auto_grow(this)" name="input" id="description" class="table-element table-textarea appendix-element">{{appendix.appendixdesc}}</textarea>
             </td>
         </tr>
+        {{#isGreater token.role "1"}}
         {{#unless create-check}}
         <tr> 
             <td colspan="2"><button onclick="delete_element(this)" id="delete-button" class="table-button" value="{{appendix.appendixID}}">Удалить</button></td>
         </tr>
         {{/unless }}
+        {{/isGreater}}
     </table>

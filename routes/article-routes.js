@@ -8,12 +8,13 @@ var jsonParser = bodyParser.json();
 router.get("/articles", verifyToken,async function(request,response){
     var data = await getArticles();
     const title = "Домашня страница";
-    response.render("articles/articles.hbs", {articles: data,title: title});
+    console.log(request.fakeToken);
+    response.render("articles/articles.hbs", {articles: data,title: title, token: request.fakeToken});
 });
 
 router.get("/articles/article/create", verifyToken, checkIfAdmin, async function(request,response){
     const title = "Новая новость";
-    response.render("articles/create.hbs",{title:title});
+    response.render("articles/create.hbs",{title:title, token: request.fakeToken});
 });
 
 router.post("/articles/article/create",jsonParser ,async function(request,response){
@@ -29,8 +30,7 @@ router.post("/articles/article/delete/:id", async function(request,response){
 router.get("/articles/article/article/:id",verifyToken,checkIfAdmin, async function(request,response){
     var data = await getArticleForID(request.params.id);
     const title = data[0].articlename;
-    console.log(data);
-    response.render("articles/article.hbs",{article:data[0],title:title});
+    response.render("articles/article.hbs",{article:data[0],title:title, token: request.fakeToken});
 });
 
 router.post("/articles/article/update",jsonParser ,async function(request,response){

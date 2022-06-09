@@ -7,11 +7,11 @@
         <link rel="stylesheet" href="/../../css/table.css">
     </head>
     <body>
-        {{> header}}
-        <a href="/articles/article/create" class="create_href"><button class="create-button">Добавить новость</button></a>
+        {{> header token=token}}
+        {{#isGreater token.role "1"}}<a href="/articles/article/create" class="create_href"><button class="create-button">Добавить новость</button></a>{{/isGreater}}
         <div style=" margin-top: 120px;"></div>
         {{#each articles}}
-            {{> article_table attribute="readonly disabled" article=this}}
+            {{> article_table attribute="readonly disabled" article=this token=../token}}
         {{/each}}
     </body>
 </html>

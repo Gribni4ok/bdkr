@@ -1,12 +1,14 @@
 <table class="main-table fixed">
     <caption>Студент {{student.studentsurname}} {{student.studentname}}</caption>
     {{#unless create-check}}
+    {{#isGreater token.role "1"}}
     <tr>
         <th>ID студента</th>
         <td>
             <input disabled readonly id="id" class="table-element" value="{{student.studentID}}">
         </td>
     </tr>
+    {{/isGreater}}
     {{/unless}}
     <tr>
         <th>Полное ФИО</th>
@@ -58,12 +60,14 @@
             <input {{attribute}} name="input" id="phone" class="table-element" value="{{student.studentphone}}">
         </td>
     </tr>
+    {{#isGreater token.role "1"}}
     <tr>
         <th>Логин</th>
         <td>
             <input {{attribute}} name="input" id="login" class="table-element" value="{{student.studentlogin}}">
         </td>
     </tr>
+    {{/isGreater}}
     {{#if create-check}}
     <tr>
         <th>Пароль</th>
@@ -72,6 +76,7 @@
         </td>
     </tr>
     {{/if}}
+    {{#isGreater token.role "1"}}
     <tr>
         <th>ИНН</th>
         <td>
@@ -96,4 +101,5 @@
             <input {{attribute}} type="date" name="input" id="passportdate" class="table-element" value="{{student.studentpassportdate}}">
         </td>
     </tr>   
+    {{/isGreater}}
 </table>

@@ -7,16 +7,20 @@
         
     </head>
     <body>
-        {{> header}}
+        {{> header token=token}}
+        {{#isGreater token.role "1"}}
         <a href="/students/appendix/create/{{student.studentID}}" class="create_href"><button class="create-button">Добавить приложение</button></a>
+        {{/isGreater}}
         {{> student_table student=student attribute="disabled readonly"}}
+        {{#isGreater token.role "1"}}
         <label>Режим редактирования</label>
         <input type="checkbox" id="toggle-button" class="toggle-button">
         <button hidden id="update-button">Сохранить</button>
+        {{/isGreater}}
         <h3>Приложения</h3>
         <div class="table-grid">
         {{#each appendixes}}
-            {{> appendix_table attribute="readonly disabled" appendix=this}} 
+            {{> appendix_table attribute="readonly disabled" appendix=this token=../token}} 
         {{/each}}
     </div>
     </body>

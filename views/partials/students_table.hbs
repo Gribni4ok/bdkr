@@ -1,7 +1,7 @@
 <table id="table">
     <caption>Список студентов</caption>
         <tr>
-            <th>ID студента</th>
+            {{#isGreater token.role "1"}}<th>ID студента</th>{{/isGreater}}
             <th>ФИО студента</th>
             <th>Группа</th>
             <th>Почта</th>
@@ -9,12 +9,16 @@
         </tr>
         {{#each students as |student|}}
         <tr>
+            {{#isGreater token.role "1"}}
             <td><a  href="/students/student/student/{{student.studentID}}">{{student.studentID}}</a></td>
+            {{/isGreater}}
             <td><a  href="/students/student/student/{{student.studentID}}">{{student.studentsurname}} {{student.studentname}} {{student.studentmidname}}</a></td>
             <td><a  href="/classes/class/class/{{student.classID}}">{{student.classname}}</a></td>
             <td><a  href="/students/student/student/{{student.studentID}}">{{student.studentemail}}</a></td>
             <td><a  href="/students/student/student/{{student.studentID}}">{{student.studentphone}}</a></td>
+            {{#isGreater token.role "1"}}
             <td><button onclick="delete_element(this)" id="delete-button" class="table-button" value="{{student.studentID}}">Удалить</button></td>
+            {{/isGreater}}
         </tr>
         {{/each}}
 </table>

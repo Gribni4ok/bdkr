@@ -1,18 +1,24 @@
 <table id="table">
     <caption>Список преподавателей</caption>
         <tr>
+            {{#isGreater token.role "1"}}
             <th>ID преподавателя</th>
+            {{/isGreater}}
             <th>ФИО преподавателя</th>
             <th>Почта</th>
             <th>Номер телефона</th>
         </tr>
         {{#each teachers as |teacher|}}
         <tr>
+            {{#isGreater ../token.role "1"}}
             <td><a  href="/teachers/teacher/teacher/{{teacher.teacherID}}">{{teacher.teacherID}}</a></td>
+            {{/isGreater}}
             <td><a  href="/teachers/teacher/teacher/{{teacher.teacherID}}">{{teacher.teachersurname}} {{teacher.teachername}} {{teacher.teachermidname}}</a></td>
             <td><a  href="/teachers/teacher/teacher/{{teacher.teacherID}}">{{teacher.teacheremail}}</a></td>
             <td><a  href="/teachers/teacher/teacher/{{teacher.teacherID}}">{{teacher.teacherphone}}</a></td>
+            {{#isGreater ../token.role "1"}}
             <td><button onclick="delete_element(this)" id="delete-button" class="table-button" value="{{teacher.teacherID}}">Удалить</button></td>
+            {{/isGreater}}
         </tr>
         {{/each}}
 </table>

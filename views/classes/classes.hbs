@@ -6,8 +6,8 @@
         <link rel="stylesheet" href="/../../css/table.css">
     </head>
     <body>
-        {{> header}}
-        <a href="/classes/create" class="create_href"><button class="create-button">Добавить группу</button></a>
+        {{> header token=token}}
+        {{#isGreater token.role "1"}}<a href="/classes/create" class="create_href"><button class="create-button">Добавить группу</button></a>{{/isGreater}}
         <input type="text" id="filter-input" onkeyup="applyFilter()" placeholder="Поиск...">
         <table id="table">
             <caption>Список групп</caption>
@@ -33,7 +33,7 @@
                         {{this.classdate}}
                         </a>
                     </td>
-                    <td><button onclick="delete_element(this)" id="delete-button" class="table-button" value="{{this.classID}}">Удалить</button></td>
+                    {{#isGreater token.role "1"}}<td><button onclick="delete_element(this)" id="delete-button" class="table-button" value="{{this.classID}}">Удалить</button></td>{{/isGreater}}
                 </tr>
             {{/each}}
         </table>

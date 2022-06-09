@@ -11,9 +11,13 @@
       </script>
     </li>
     <li><a href="/classes">Группы</a></li>
+    {{#isGreater token.role "0"}}
     <li><a href="/students">Студенты</a></li>
+    {{/isGreater}}
     <li><a href="/teachers">Преподаватели</a></li>
     <li><a href="/courses">Направления</a></li>
+    {{#isGreater token.role "1"}}
     <li><a href="/admins">Админы</a></li>
+    {{/isGreater}}
   </ul>
 </nav>

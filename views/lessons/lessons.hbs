@@ -5,9 +5,11 @@
         <link rel="stylesheet" href="/../../css/main.css">
     </head>
     <body>
-        {{> header}}
+        {{> header token=token}}
+        {{#isGreater token.role "1"}}
         <a href="/lessons/create" class="create_href"><button class="create-button">Добавить занятие</button></a>
         <a href="/lessons/parameters/edit" class="create_href"><button class="edit-button">Редактировать информацию для занятий</button></a>
+        {{/isGreater}}
         <h2>Расписание</h2>
     <div>
       <script>
