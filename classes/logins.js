@@ -57,7 +57,7 @@ async function searchAdmins(user){
     .catch((err)=>{
         console.log(err);
     })
-    if(bcrypt.compare(user.password, data[0][0].adminpassword))
+    if(data[0][0] && bcrypt.compare(user.password, data[0][0].adminpassword))
     {
         var temp = {
             role:2,
@@ -77,7 +77,7 @@ async function searchTeachers(user){
     .catch((err)=>{
         console.log(err);
     })
-    if(bcrypt.compare(user.password, data[0][0].teacherpassword))
+    if(data[0][0] && bcrypt.compare(user.password, data[0][0].teacherpassword))
     {
         var temp = {
             role:1,
@@ -97,7 +97,7 @@ async function searchStudents(user){
     .catch((err)=>{
         console.log(err);
     })
-    if(bcrypt.compare(user.password, data[0][0].studentpassword))
+    if(data[0][0] && bcrypt.compare(user.password, data[0][0].studentpassword))
     {
         var temp = {
             role:0,
@@ -144,8 +144,8 @@ async function checkIfNoAdmins(req,res,next){
     .catch((err)=>{
         console.log(err);
     });
-    if(admins[0][0].length == 0) next();
+    if(!admins[0][0]) next();
     else res.redirect("/authorization");
 }
 
-module.exports = {createAdmin, findUser, genToken, verifyToken, checkIfAdmin, checkIfTeacher};
+module.exports = {createAdmin, findUser, genToken, verifyToken, checkIfAdmin, checkIfTeacher, checkIfNoAdmins};

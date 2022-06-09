@@ -1,4 +1,6 @@
 const pool = require("../js/init.js");
+const bcrypt = require("bcrypt");
+const {saltRounds} = require("../consts/values.js");
 
 async function getStudents(){
     var data = await pool.execute(`
@@ -99,6 +101,7 @@ async function createStudent(data){
     var temp1 = "";
     var temp2 = "";
     var result;
+    const psw = bcrypt.hashSync(data.studentpassword, saltRounds);
     if(data.classID != '')
     { 
         temp1 = "classID,";
@@ -108,7 +111,7 @@ async function createStudent(data){
   INSERT students(${temp1} studentsurname, studentname, studentmidname, studentlogin, studentpassword,
     studentsex, studentemail, studentphone, studenttin, studentpassport, studentpassportby, studentpassportdate)
   VALUES (${temp2} "${data.studentsurname}", "${data.studentname}", "${data.studentmidname}", 
-  "${data.studentlogin}", "${data.studentpassword}", "${data.studentsex}", "${data.studentemail}",
+  "${data.studentlogin}", "${psw}", "${data.studentsex}", "${data.studentemail}",
    "${data.studentphone}", "${data.studenttin}", "${data.studentpassport}", "${data.studentpassportby}",
     "${data.studentpassportdate}")
 `)

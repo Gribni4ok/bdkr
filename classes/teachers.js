@@ -1,4 +1,6 @@
 const pool = require("../js/init.js");
+const bcrypt = require("bcrypt");
+const {saltRounds} = require("../consts/values.js");
 
 async function getTeachers(){
     var data = await pool.execute(`
@@ -82,11 +84,12 @@ return result;
 
 async function createTeacher(data){
     var result;
+    const psw = bcrypt.hashSync(data.teacherpassword, saltRounds);
 await pool.execute(`
     INSERT teachers(teachersurname, teachername, teachermidname, teacherlogin, teacherpassword, teachersalary, teacherexperience,
     teachersex, teacheremail, teacherphone, teachertin, teacherpassport, teacherpassportby, teacherpassportdate, teacheraddress)
     VALUES ("${data.teachersurname}", "${data.teachername}", "${data.teachermidname}", 
-    "${data.teacherlogin}", "${data.teacherpassword}", "${data.teachersalary}", "${data.teacherexperience}", "${data.teachersex}", "${data.teacheremail}",
+    "${data.teacherlogin}", "${psw}", "${data.teachersalary}", "${data.teacherexperience}", "${data.teachersex}", "${data.teacheremail}",
     "${data.teacherphone}", "${data.teachertin}", "${data.teacherpassport}", "${data.teacherpassportby}",
     "${data.teacherpassportdate}", "${data.teacheraddress}")
 `)

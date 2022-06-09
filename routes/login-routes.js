@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const {createAdmin, findUser, genToken} = require("../classes/logins.js");
+const {createAdmin, findUser, genToken, checkIfNoAdmins} = require("../classes/logins.js");
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 
-router.get("/registration", function(request,response){
+router.get("/registration",checkIfNoAdmins, function(request,response){
     const title ="Регистрация"
     response.render("login/registration.hbs",{title:title});
 });
