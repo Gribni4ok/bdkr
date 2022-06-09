@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{{title}}</title>
+        <link rel="stylesheet" href="/../../css/login.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1>Авторизация</h1>
+            <p>Пожалуйста заполните поля ниже.</p>
+            <hr>
+
+            <label for="login"><b>Логин</b></label>
+            <input type="text" placeholder="Введите логин" name="login" id="login" required>
+
+            <label for="psw"><b>Пароль</b></label>
+            <input type="password" placeholder="Введите пароль" name="psw" id="psw" required>
+
+            <button id="reg-button" class="registerbtn">Авторизация</button>
+        </form>
+    </body>
+</html>
+<script>
+    document.getElementById('reg-button').onclick = async function() {
+        var data={
+            login: document.getElementById('login').value,
+            password: document.getElementById('psw').value
+        }
+        console.log(data);
+        if(!data.login || /\s/g.test(data.login) || data.login.lenght> 20){alert("Некорректный логин");return;}
+        if(!data.password || /\s/g.test(data.password) || data.password.lenght> 20){alert("Некорректный пароль");return;}
+
+        const response = await fetch('/authorization', {
+            method: 'post',
+            body: JSON.stringify(data),
+            headers: {'Content-Type': 'application/json'}
+        });
+        if(response.status == 400){alert("Проверьте введённые данные");return;}
+        alert("Авторизация прошла успешно");
+        const res = await response.json();
+        localStorage.setItem('token',res.token);
+        location.assign("/articles");
+    }   
+</script>

@@ -45,6 +45,9 @@
             body: JSON.stringify(data),
             headers: {'Content-Type': 'application/json'}
         });
+        if(response.status == 400){alert("Ошибка регистрации");return;}
+        alert("Регистрация прошла успешно");
+        location.assign("/authorization");
     }   
 
 </script>
