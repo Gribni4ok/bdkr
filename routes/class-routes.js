@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const {getClasses,getClassUpdateData, getClassForID, getStudentsForClassID, UpdateClassForID, createClass,  deleteClassForID} = require("../classes/classes.js");
-const {verifyToken, checkIfAdmin, checkIfTeacher,fakeToken} = require("../classes/logins.js");
+const {verifyToken, checkIfAdmin, checkIfTeacher} = require("../classes/logins.js");
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 

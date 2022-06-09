@@ -63,7 +63,7 @@ async function searchAdmins(user){
     {
         var temp = {
             role:"2",
-            login: data[0].adminlogin
+            login: data[0][0].adminlogin
         }
         fakeToken = temp;
         return temp;

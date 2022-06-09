@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{title}}</title>
+        <link rel="stylesheet" href="/../../css/main.css">
+        <link rel="stylesheet" href="/../../css/table.css">
+        
+    </head>
+    <body>
+        {{> header token=token}}
+        <a href="/admins/admin/create" class="create_href"><button class="create-button">Добавить админа</button></a>
+        <input type="text" id="filter-input" onkeyup="applyFilter()" placeholder="Поиск...">
+        {{> admins_table admins=admins}}
+    </body>
+</html>
+<script>
+    async function delete_element(elem){
+        var id = elem.value;
+        const response = await fetch('/admins/admin/delete/'+id, {
+            method: 'post',
+            headers: {'Content-Type': 'application/json'}
+        });
+        if (response.status == 400) {alert("Ошибка");return;}
+        var tr = elem.closest("tr");
+        tr.remove();
+    }
+    function applyFilter() {
+    var input, filter, table, tr, i, txtValue;
+    input = document.getElementById("filter-input");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("table");
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 0; i < tr.length; i++) {
+            var endLoop = false;
+            tdAll = tr[i].getElementsByTagName("td");
+            for(let td of tdAll)
+            if(!endLoop)
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                    endLoop = true;
+                } 
+                else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>

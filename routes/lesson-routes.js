@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const {getLessonsForDate} = require("../classes/lessons.js");
 const {getLessonForID, getLessonUpdateData, updateLessonForID,createLesson, deleteParameterForID, editParameters} = require("../classes/lesson.js");
-const {verifyToken, checkIfAdmin, checkIfTeacher,fakeToken} = require("../classes/logins.js");
+const {verifyToken, checkIfAdmin, checkIfTeacher} = require("../classes/logins.js");
 const months = require("../consts/values.js");
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
@@ -15,12 +15,12 @@ router.get("/lessons/lessons/:id",verifyToken, async function(request,response){
   var data = await getLessonsForDate(year,monthnumber);
   let monthname = months[monthnumber-1];
   
-  response.render("lessons/lessons.hbs",{lessons: data, month: monthname,monthnumber: monthnumber,year: year,title, token: fakeToken});
+  response.render("lessons/lessons.hbs",{lessons: data, month: monthname,monthnumber: monthnumber,year: year,title, token: request.fakeToken});
 });
 
 router.get("/lessons/create",verifyToken,checkIfAdmin, async function(request,response){
     var data = await getLessonUpdateData();
-    response.render("lessons/create.hbs", {dat: data, token: fakeToken});
+    response.render("lessons/create.hbs", {dat: data, token: request.fakeToken});
 });
 
 router.post("/lessons/create", jsonParser,async function(request,response){

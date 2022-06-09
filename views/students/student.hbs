@@ -11,7 +11,7 @@
         {{#isGreater token.role "1"}}
         <a href="/students/appendix/create/{{student.studentID}}" class="create_href"><button class="create-button">Добавить приложение</button></a>
         {{/isGreater}}
-        {{> student_table student=student attribute="disabled readonly"}}
+        {{> student_table student=student attribute="disabled readonly" token=token}}
         {{#isGreater token.role "1"}}
         <label>Режим редактирования</label>
         <input type="checkbox" id="toggle-button" class="toggle-button">
@@ -127,7 +127,7 @@
         if (response.status == 400) {alert("Ошибка");return;}
         var tr = elem.closest("table");
         tr.remove();
-    }
+    };
     function auto_grow(element) {
         element.style.height = "5px";
         element.style.height = (element.scrollHeight)+"px";

@@ -10,8 +10,8 @@
       document.write('<a href="' + loc + '">Учебный план</a>');
       </script>
     </li>
-    <li><a href="/classes">Группы</a></li>
     {{#isGreater token.role "0"}}
+    <li><a href="/classes">Группы</a></li>
     <li><a href="/students">Студенты</a></li>
     {{/isGreater}}
     <li><a href="/teachers">Преподаватели</a></li>

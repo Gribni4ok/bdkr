@@ -9,6 +9,7 @@ const teacherRoutes = require("../routes/teacher-routes.js");
 const articleRoutes = require("../routes/article-routes.js");
 const loginRoutes = require("../routes/login-routes.js");
 const coursesRoutes = require("../routes/course-routes.js");
+const adminsRoutes = require("../routes/admin-routes.js");
 
 createTables();
 
@@ -25,6 +26,7 @@ app.use(teacherRoutes);
 app.use(articleRoutes);
 app.use(loginRoutes);
 app.use(coursesRoutes);
+app.use(adminsRoutes);
 
 hbs.registerHelper('compareStrings', function(p, q, options) {
   return (p == q) ? options.fn(this) : options.inverse(this);

@@ -3,7 +3,7 @@ const router = express.Router();
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 const {getTeachers,getTeacherForID,updateTeacherForID,createTeacher, createEducation, deleteTeacherForID, deleteEducationForID}= require("../classes/teachers.js");
-const {verifyToken, checkIfAdmin, checkIfTeacher,fakeToken} = require("../classes/logins.js");
+const {verifyToken, checkIfAdmin, checkIfTeacher} = require("../classes/logins.js");
 
 router.get("/teachers",verifyToken, async function(request,response){
     var data = await getTeachers();
@@ -11,7 +11,7 @@ router.get("/teachers",verifyToken, async function(request,response){
     response.render("teachers/teachers.hbs", {teachers: data,title:title, token: request.fakeToken});
 });
 
-router.get("/teachers/teacher/teacher/:id",checkIfAdmin,verifyToken, async function(request,response){
+router.get("/teachers/teacher/teacher/:id",verifyToken, async function(request,response){
     var data = await getTeacherForID(request.params.id);
     const title = data.data[0].teachersurname+ " " + data.data[0].teachername+ " " + data.data[0].teachermidname;
     response.render("teachers/teacher.hbs", {teacher: data.data[0], educations: data.educations,title:title, token: request.fakeToken});

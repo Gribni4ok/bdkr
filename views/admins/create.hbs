@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{title}}</title>
+        <link rel="stylesheet" href="/../../css/main.css">
+        <link rel="stylesheet" href="/../../css/table.css">
+        
+    </head>
+    <body>
+        {{> header token=token}}
+        {{> admin_table admin=admin}}
+        <button id="create-button">Создать</button>
+    </body>
+</html>
+<script>
+document.getElementById('create-button').onclick = async function(){
+
+     var data={
+         login: document.getElementById('login').value,
+         password: document.getElementById('password').value,
+         email: document.getElementById('email').value
+     }   
+    if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(data.email) || data.email.length > 30){alert("Неверный email"); return;}
+    if(!data.login || /\s/g.test(data.login) || data.login.lenght> 20){alert("Некорректный логин");return;}
+    if(!data.password || /\s/g.test(data.password) || data.password.length>20){alert("Некорректный пароль");return;}
+
+    const response = await fetch('/admins/admin/create', {
+            method: 'post',
+            body: JSON.stringify(data),
+            headers: {'Content-Type': 'application/json'}
+        });
+}
+</script>

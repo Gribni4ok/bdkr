@@ -44,7 +44,7 @@
         if(!/^\d+$/.test(data.studentphone) || data.studentphone.length > 11){alert("Некорректный номер телефона");return;}
         if(!/^\d+$/.test(data.studenttin) || data.studenttin.length != 12){alert("Некорректный ИНН");return;}
         if(!/^\d+$/.test(data.studentpassport) || data.studentpassport.length !=10){alert("Некорректные номер и серия паспорта");return;}
-        if(!data.studentpassportby /\s/g.test(data.studentpassportby) || data.studentpassportby.lenght > 50){alert("Место выдачи должно быть не длиннее 50 символов");return;}
+        if(!data.studentpassportby || /\s/g.test(data.studentpassportby) || data.studentpassportby.lenght > 50){alert("Место выдачи должно быть не длиннее 50 символов");return;}
         var date = data.studentpassportdate.split(/[- :]/);
         if(!data.studentpassportdate){alert("Некорректный формат даты");return;}
         var curdate = new Date();

@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const {createAdmin, findUser, genToken, checkIfNoAdmins,fakeToken} = require("../classes/logins.js");
+const {createAdmin, findUser, genToken, checkIfNoAdmins} = require("../classes/logins.js");
 var bodyParser = require('body-parser');
 const res = require("express/lib/response");
 var jsonParser = bodyParser.json();
 
 router.get("/registration",checkIfNoAdmins, function(request,response){
     const title ="Регистрация"
-    response.render("login/registration.hbs",{title:title, token: fakeToken});
+    response.render("login/registration.hbs",{title:title, token: request.fakeToken});
 });
 
 router.post("/registration", jsonParser, async function(request,response){
@@ -17,7 +17,7 @@ router.post("/registration", jsonParser, async function(request,response){
 
 router.get("/authorization", function(request,response){
     const title ="Авторизация";
-    response.render("login/authorization.hbs",{title:title, token: fakeToken});
+    response.render("login/authorization.hbs",{title:title, token: request.fakeToken});
 });
 
 router.post("/authorization", jsonParser, findUser, async function(request,response){

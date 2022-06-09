@@ -3,7 +3,7 @@ const router = express.Router();
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 const {getStudents, getStudentForID,getStudentUpdateData, updateStudentForID, createStudent, createAppendix, deleteStudentForID,deleteAppendixForID} = require("../classes/students.js");
-const {verifyToken, checkIfAdmin, checkIfTeacher,fakeToken} = require("../classes/logins.js");
+const {verifyToken, checkIfAdmin, checkIfTeacher} = require("../classes/logins.js");
 
 router.get("/students",verifyToken,checkIfTeacher, async function(request,response){
     var data = await getStudents();
