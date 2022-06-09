@@ -63,6 +63,15 @@
                     temp.appendChild(new Option(option,value));
             });
 
+            temp = document.getElementById('class');
+            if(temp)
+            res.classes.forEach((classF)=>{
+                let value = classF.classID;
+                let option = classF.classname;
+                if(temp.selectedIndex == -1 || temp.options[0].value != value)
+                    temp.appendChild(new Option(option,value));
+            });
+
             temp = document.getElementById('format');
             if(temp)
             res.formats.forEach((format)=>{
@@ -108,7 +117,8 @@
                 timingID: document.getElementById('timing').value,
                 formatID: document.getElementById('format').value,
                 audienceID: document.getElementById('audience').value,
-                description: document.getElementById('description').value
+                description: document.getElementById('description').value,
+                classID: document.getElementById("class").value
             };
             if(data.description.length >300) 
             {

@@ -2,12 +2,15 @@
         {{#unless create-check}}
         <tr>
             <th>Дата публикации</th>
-            <td><input disabled readonly id="date" class="table-element" value="{{article.articledate}}"></td>
+            <td style="width: 80%";><input disabled readonly id="date" class="table-element" value="{{article.articledate}}"></td>
         </tr>
+        
         <tr>
             <th>ID записи</th>
-            <td><input disabled readonly id="id" class="table-element" value="{{article.articleID}}"></td>
+            <td><a class="article-href" href="/articles/article/article/{{article.articleID}}">
+            <input disabled readonly id="id" class="table-element" value="{{article.articleID}}"></a></td>
         </tr>
+        
         {{/unless}}
         <tr>
             <th>Заголовок</th>
@@ -22,8 +25,10 @@
             </td>
         </tr>
         {{#unless create-check}}
+        {{#unless edit}}
         <tr> 
             <td colspan="2"><button onclick="delete_element(this)" id="delete-button" class="table-button" value="{{article.articleID}}">Удалить</button></td>
         </tr>
+        {{/unless}}
         {{/unless }}
     </table>

@@ -11,4 +11,74 @@ var data = await pool.execute(`
 return data[0];
 }
 
-module.exports = {getArticles}
+async function deleteArticleForID(id){
+    var result;
+    await pool.execute(`
+        DELETE 
+        FROM articles
+        WHERE articleID = "${id}"
+    `)
+    .then(()=>{
+        result =true;
+    })
+    .catch(err=>{
+        console.log(err);
+        result = false;
+    });
+    return result;
+}
+
+async function createArticle(data){
+    var result;
+    var temp = new Date();
+    var date = temp.getFullYear()+"-"+(temp.getMonth()+1)+"-"+temp.getDate();
+    await pool.execute(`
+        INSERT articles(articlename, articledesc, articledate)
+        VALUES ("${data.name}","${data.description}","${date}")
+    `)
+    .then(()=>{
+        result =true;
+    })
+    .catch(err=>{
+        console.log(err);
+        result = false;
+    });
+    return result;
+}
+
+async function updateArticleForID(data){
+    var result;
+    if(!data.studentID || data.studentID == '') data.studentID = 0;
+    if(!data.teacherID || data.teacherID == '') data.teacherID = 0;
+      await pool.execute(`
+      UPDATE articles
+      SET 
+          articledesc = "${data.description}",
+          articlename = "${data.classname}"
+      WHERE articleID = "${data.ID}"
+    `)
+    .then(()=>{
+      result =true;
+  })
+  .catch(err=>{
+      console.log(err);
+      result = false;
+  });
+   return result;
+  }
+
+  async function getArticleForID(id){
+    var data = await pool.execute(`
+    SELECT *
+    FROM articles
+    WHERE articleID = "${id}"
+    LIMIT 1
+    `)
+    .catch(err=>{
+        console.log(err);
+    });
+    return data[0];
+};  
+
+
+module.exports = {getArticles,deleteArticleForID,createArticle,updateArticleForID, getArticleForID}

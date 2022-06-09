@@ -128,3 +128,10 @@ table, th, td {
   border: 1px solid #ddd; /* Add a grey border */
   margin-bottom: 12px; /* Add some space below the input */
 }
+.article-href{
+  background-color: #bbc1e1;
+}
+.article-href:hover{
+  background-color: #80849c;
+  cursor: pointer;
+}

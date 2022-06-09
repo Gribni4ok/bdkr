@@ -8,6 +8,7 @@ const pool = require("../js/init.js");
     types.typeID, types.typename,
     audiences.audienceID, audiences.audiencename,
     formats.formatID, formats.formatname,
+    classes.classID,classes.classname,
     timings.timingID, timings.timingbegin, timings.timingend
     FROM lessons 
     LEFT JOIN themes
@@ -22,6 +23,8 @@ const pool = require("../js/init.js");
     ON lessons.formatID = formats.formatID
     LEFT JOIN timings
     ON lessons.timingID = timings.timingID
+    LEFT JOIN classes
+    ON lessons.classID = classes.classID
     WHERE lessonid ='${id}' 
     `)
     .catch(err=>{
@@ -67,6 +70,13 @@ async function getLessonUpdateData(){
   .catch(err=>{
     console.log(err);
   });
+  let classes = await pool.execute(`
+  SELECT classes.classID,classes.classname
+  FROM classes
+  `)
+  .catch(err=>{
+    console.log(err);
+  });
   let timings= await pool.execute(`
   SELECT timings.timingID,timings.timingbegin, timings.timingend
   FROM timings
@@ -74,7 +84,7 @@ async function getLessonUpdateData(){
   .catch(err=>{
     console.log(err);
   });
-  return {themes: themes[0], timings: timings[0], teachers: teachers[0], formats: formats[0], types: types[0], audiences: audiences[0]}
+  return {themes: themes[0],classes:classes[0], timings: timings[0], teachers: teachers[0], formats: formats[0], types: types[0], audiences: audiences[0]}
 };
 
 async function updateLessonForID(data){
@@ -88,7 +98,8 @@ async function updateLessonForID(data){
         formatID = "${data.formatID}",
         audienceID = "${data.audienceID}",
         lessondesc = "${data.description}",
-        timingID = "${data.timingID}"
+        timingID = "${data.timingID}",
+        classID = "${data.classID}"
     WHERE lessonID = "${data.lessonID}"
   `)
   .then(()=>{
@@ -104,8 +115,8 @@ return result;
 async function createLesson(data){
   var result;
     await pool.execute(`
-        INSERT lessons(formatID, audienceID, timingID, typeID, teacherID, themeID, lessondateof, lessondesc)
-        VALUES ("${data.formatID}","${data.audienceID}","${data.timingID}","${data.typeID}","${data.teacherID}","${data.themeID}","${data.lessondateof}","${data.description}")
+        INSERT lessons(classID,formatID, audienceID, timingID, typeID, teacherID, themeID, lessondateof, lessondesc)
+        VALUES ("${data.classID}","${data.formatID}","${data.audienceID}","${data.timingID}","${data.typeID}","${data.teacherID}","${data.themeID}","${data.lessondateof}","${data.description}")
     `)
     .then(()=>{
       result =true;

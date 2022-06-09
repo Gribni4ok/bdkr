@@ -25,6 +25,19 @@
                 </td>
             </tr>
             <tr>
+                <th>Группа</th>
+                <td> <select {{attribute}} name="input" id="class">
+                    {{#if data.classID}}
+                        <option value = "{{data.classID}}">{{data.classname}}</option>
+                    {{else}}
+                    {{#each data.classes}}
+                        <option value = "{{this.classID}}">{{this.classname}}</option>
+                    {{/each}}
+                    {{/if}}
+                </select>
+                </td>
+            </tr>
+            <tr>
                 <th>Преподаватель</th>
                 <td> <select {{attribute}} name="input" id="teacher">
                     {{#if data.teacherID}}
