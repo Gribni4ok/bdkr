@@ -35,16 +35,8 @@ hbs.registerHelper('compareStrings', function(p, q, options) {
 hbs.registerHelper('isGreater', function(p, q, options) {
   return (parseInt(p) > parseInt(q)) ? options.fn(this) : options.inverse(this);
 });
+
 app.use(express.static('public'));
-
-app.get("/list",function(_,response){
-  response.render("list.hbs");
-});
-
-app.use("/home",function(_,response){
-  const title = "Домашняя страница";
-  response.render("home.hbs",{title});
-});
 
 app.listen(3000);
 
