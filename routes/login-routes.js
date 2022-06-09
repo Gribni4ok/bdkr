@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const {createAdmin, findUser, genToken, checkIfNoAdmins} = require("../classes/logins.js");
 var bodyParser = require('body-parser');
+const res = require("express/lib/response");
 var jsonParser = bodyParser.json();
 
 router.get("/registration",checkIfNoAdmins, function(request,response){
@@ -22,6 +23,10 @@ router.get("/authorization", function(request,response){
 router.post("/authorization", jsonParser, findUser, async function(request,response){
     const token = await genToken(request.user);
     response.json({token: token});
+});
+
+router.get("/redirect",function(request,response){
+    response.render("redirect.hbs");
 });
 
 module.exports = router;

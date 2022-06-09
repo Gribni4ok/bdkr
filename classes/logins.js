@@ -3,6 +3,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const {saltRounds, key} = require("../consts/values.js");
 
+var roleToken;
+
 async function createAdmin(data){
     var result;
     const psw = bcrypt.hashSync(data.adminpassword, saltRounds);
@@ -29,17 +31,17 @@ async function findUser(req,res,next){
     var found;
     if(found = await searchAdmins(user))
     {
-        req.user = user;
+        req.user = found;
         next();
     }
     else if(found = await searchTeachers(user))
     {
-        req.user = user;
+        req.user = found;
         next();
     }
     else if(found = await searchStudents(user))
     {
-        req.user = user;
+        req.user = found;
         next();
     }
     else{
@@ -63,6 +65,7 @@ async function searchAdmins(user){
             role:2,
             login: data[0].adminlogin
         }
+        roleToken = temp;
         return temp;
     }
     else return false;
@@ -83,6 +86,7 @@ async function searchTeachers(user){
             role:1,
             login: data[0][0].teacherlogin
         }
+        roleToken = temp;
         return temp;
     }
     else return false;
@@ -103,6 +107,7 @@ async function searchStudents(user){
             role:0,
             login: data[0][0].studentlogin
         }
+        roleToken = temp;
         return temp;
     }
     else return false;
@@ -114,25 +119,27 @@ async function genToken(user){
 }
 
 async function verifyToken(req,res,next){
-    const token = req.headers["token"];
-    if(!token)
+    //const token = req.headers['token'];
+    if(!roleToken)
     {
         res.redirect("/authorization");
     }
     else
     {
-        req.user = jwt.verifyToken(token,key);
+        //req.user = jwt.verify(token,key);
         next();
     }
 }
 
 async function checkIfTeacher(req,res,next){
-    if(req.user.role >0) next();
+    //if(req.user.role >0) next();
+    if(roleToken.role >0) next();
     else res.redirect("/articles");
 }
 
 async function checkIfAdmin(req,res,next){
-    if(req.user.role >1) next();
+    //if(req.user.role >1) next();
+    if(roleToken.role >1) next();
     else res.redirect("/articles");
 }
 

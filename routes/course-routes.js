@@ -1,16 +1,17 @@
 const express = require("express");
 const router = express.Router();
 const {getCourses,deleteCourseForID,createCourse, getCourseForID,updateCourseForID} = require("../classes/courses.js");
+const {verifyToken, checkIfAdmin, checkIfTeacher} = require("../classes/logins.js");
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 
-router.get("/courses",async function(request,response){
+router.get("/courses",verifyToken,async function(request,response){
     var data = await getCourses();
     const title = "Направления обучения";
     response.render("courses/courses.hbs", {courses: data,title: title});
 });
 
-router.get("/courses/course/create", async function(request,response){
+router.get("/courses/course/create",verifyToken,checkIfAdmin, async function(request,response){
     const title = "Новое направление";
     response.render("courses/create.hbs",{title:title});
 });
@@ -25,7 +26,7 @@ router.post("/courses/course/delete/:id", async function(request,response){
     else response.sendStatus(200);
 });
 
-router.get("/courses/course/course/:id", async function(request,response){
+router.get("/courses/course/course/:id", verifyToken,checkIfAdmin,async function(request,response){
     var data = await getCourseForID(request.params.id);
     const title = data[0].coursename;
     response.render("courses/course.hbs",{course:data[0],title:title});

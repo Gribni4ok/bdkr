@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const {getClasses,getClassUpdateData, getClassForID, getStudentsForClassID, UpdateClassForID, createClass,  deleteClassForID} = require("../classes/classes.js");
+const {verifyToken, checkIfAdmin, checkIfTeacher} = require("../classes/logins.js");
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 
-router.get("/classes",async function(request,response){
+router.get("/classes",verifyToken,checkIfTeacher,async function(request,response){
     var data = await getClasses();
     const title = "Учебные группы";
     response.render("classes/classes.hbs", {data: data,title: title});
@@ -19,7 +20,7 @@ router.post("/classes/class/update", jsonParser, async function(request,response
     else response.sendStatus(200);
 });
 
-router.get("/classes/class/class/:id", async function(request,response){
+router.get("/classes/class/class/:id",verifyToken,checkIfTeacher, async function(request,response){
     const id = request.params.id;
     const title = "Группа номер " + id;
     var data = await getClassForID(id);
@@ -27,7 +28,7 @@ router.get("/classes/class/class/:id", async function(request,response){
     response.render("classes/class.hbs", {info: data.info[0], teacher: data.teacher[0], students: students,title:title});
 });
 
-router.get("/classes/create", async function(request,response){
+router.get("/classes/create",verifyToken,checkIfAdmin, async function(request,response){
     var data = await getClassUpdateData();
     const title = "Новая группа";
     response.render("classes/create.hbs", {data: data,title:title});
