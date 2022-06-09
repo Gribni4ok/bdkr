@@ -30,6 +30,7 @@ function createTables(){
         courseID tinyint not null auto_increment,
         coursename nvarchar(30) not null,
         courseprice mediumint not null,
+        coursedesc varchar(500) not null,
         coursetime tinyint not null,
         primary key(courseID)
         )`;
@@ -47,15 +48,15 @@ function createTables(){
         primary key(educationID),
         foreign key(teacherID) references teachers(teacherID) on delete cascade
         )`;
-        
+        /*
         //3 Связь преподавателей и направлений
-      request[request.length] = `create table if not exists teacherstoeducations(
+      request[request.length] = `create table if not exists teacherstocourses(
         teacherID tinyint,
         courseID tinyint,
         foreign key(teacherID) references teachers(teacherID) on delete cascade,
         foreign key(courseID) references courses(courseID) on delete cascade
         )`;
-
+          */
         //4 Студенческие группы
       request[request.length] = `create table if not exists classes(
         classID tinyint not null auto_increment,

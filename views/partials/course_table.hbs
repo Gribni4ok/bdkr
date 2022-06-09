@@ -1,0 +1,40 @@
+<table class="article-table fixed">
+        {{#unless create-check}}
+        <tr>
+            <th>ID записи</th>
+            <td style="width: 80%"><a class="article-href" href="courses/course/course/{{course.courseID}}">
+            <input disabled readonly id="id" class="table-element" value="{{course.courseID}}"></a></td>
+        </tr>
+        {{/unless}}
+        <tr>
+            <th>Наименование</th>
+            <td style="width: 80%">
+                <textarea {{attribute}} oninput="auto_grow(this)" name="input" id="name" class="table-element table-textarea">{{course.coursename}}</textarea>
+            </td>
+        </tr>
+        <tr>
+            <th>Описание</th>
+            <td>
+                <textarea {{attribute}} oninput="auto_grow(this)" name="input" id="description" class="table-element table-textarea">{{course.coursedesc}}</textarea>
+            </td>
+        </tr>
+        <tr>
+            <th>Цена</th>
+            <td>
+                <input {{attribute}} name="input" id="price" class="table-element" value="{{course.courseprice}}">
+            </td>
+        </tr>
+        <tr>
+            <th>Месяцев обучения</th>
+            <td>
+                <input {{attribute}}name="input" id="time" class="table-element" value="{{course.coursetime}}">
+            </td>
+        </tr>
+        {{#unless create-check}}
+        {{#unless edit}}
+        <tr> 
+            <td colspan="2"><button onclick="delete_element(this)" id="delete-button" class="table-button" value="{{course.courseID}}">Удалить</button></td>
+        </tr>
+        {{/unless}}
+        {{/unless }}
+    </table>

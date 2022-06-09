@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{{title}}</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/autosize.js/4.0.2/autosize.min.js"></script>
+        <link rel="stylesheet" href="/../../css/main.css">
+        <link rel="stylesheet" href="/../../css/table.css">
+    </head>
+    <body>
+        {{> header}}
+        <div style=" margin-top: 120px;"></div>
+        {{> course_table edit="True"}}
+        <button id="update-button">Сохранить</button>
+    </body>
+</html>
+<script>
+    function auto_grow(element) {
+        element.style.height = "5px";
+        element.style.height = (element.scrollHeight)+"px";
+    };
+    document.addEventListener('DOMContentLoaded', function() {
+    autosize(document.querySelectorAll('#description'));
+    }, false);
+
+    document.getElementById('update-button').onclick = async function(){
+    var data = {
+        ID:  document.getElementById("id").value,
+        name: document.getElementById("name").value,
+        description: document.getElementById("description").value,
+        price: document.getElementById("price").value,
+        time: document.getElementById("time").value
+    }
+    if(data.description.length < 1 || data.description.length > 500){alert("Описание не должно быть длиннее 500 символов и не короче 1");return;}
+    if(!data.name || data.name.length > 50){alert("Некорректный заголовок");return;}
+    if(!data.time || !/^\d+$/.test(data.time)){alert("Укажите срок обучения");return;}
+    if(!data.price || !/^\d+$/.test(data.price)){alert("Укажите цену обучения");return;}
+    const response = await fetch('/courses/course/update', {
+            method: 'post',
+            body: JSON.stringify(data),
+            headers: {'Content-Type': 'application/json'}
+        });
+        if (response.status == 200){
+            alert("Запись успешно обновлена");
+            return;
+        }
+        else{
+            alert("Ошибка при обновлении записи");
+        }
+    }
+</script>
