@@ -49,6 +49,18 @@ async function findUser(req,res,next){
     }
 }
 
+function compareAsync(param1, param2) {
+    return new Promise(function(resolve, reject) {
+        bcrypt.compare(param1, param2, function(err, res) {
+            if (err) {
+                 reject(err);
+            } else {
+                 resolve(res);
+            }
+        });
+    });
+}
+
 async function searchAdmins(user){
     var data = await pool.execute(`
     SELECT * 
@@ -59,7 +71,7 @@ async function searchAdmins(user){
     .catch((err)=>{
         console.log(err);
     })
-    if(data[0][0] && bcrypt.compare(user.password, data[0][0].adminpassword))
+    if(data[0][0] && await compareAsync(user.password, data[0][0].adminpassword))
     {
         var temp = {
             role:"2",
@@ -80,7 +92,7 @@ async function searchTeachers(user){
     .catch((err)=>{
         console.log(err);
     })
-    if(data[0][0] && bcrypt.compare(user.password, data[0][0].teacherpassword))
+    if(data[0][0] && await compareAsync(user.password, data[0][0].teacherpassword))
     {
         var temp = {
             role:"1",
@@ -101,7 +113,7 @@ async function searchStudents(user){
     .catch((err)=>{
         console.log(err);
     })
-    if(data[0][0] && bcrypt.compare(user.password, data[0][0].studentpassword))
+    if(data[0][0] && await compareAsync(user.password, data[0][0].studentpassword))
     {
         var temp = {
             role:"0",
