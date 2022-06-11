@@ -7,6 +7,7 @@ var jsonParser = bodyParser.json();
 
 router.get("/admins",verifyToken,checkIfAdmin,async function(request,response){
     var data = await getAdmins();
+    console.log(data);
     const title = "Список админов";
     response.render("admins/admins.hbs", {admins: data,title: title, token: request.fakeToken});
 });

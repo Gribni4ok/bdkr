@@ -15,6 +15,11 @@ router.post("/registration", jsonParser, async function(request,response){
     else response.sendStatus(200);
 });
 
+router.get("/", function(request,response){
+    const title ="Авторизация";
+    response.render("login/authorization.hbs",{title:title, token: request.fakeToken});
+});
+
 router.get("/authorization", function(request,response){
     const title ="Авторизация";
     response.render("login/authorization.hbs",{title:title, token: request.fakeToken});

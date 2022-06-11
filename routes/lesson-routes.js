@@ -61,7 +61,6 @@ router.post("/lessons/parameters/edit",jsonParser, async function(request,respon
 });
 
 router.post("/lessons/parameters/delete/:id",jsonParser,async function(request,response){
-  console.log(request.body);
       if(!request.body || !await deleteParameterForID(request.body.name,request.params.id)) response.sendStatus(400);
       else response.sendStatus(200);
 });

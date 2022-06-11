@@ -10,7 +10,24 @@
         {{> header token=token}}
         <a href="/admins/admin/create" class="create_href"><button class="create-button">Добавить админа</button></a>
         <input type="text" id="filter-input" onkeyup="applyFilter()" placeholder="Поиск...">
-        {{> admins_table admins=admins}}
+        <table id="table">
+    <caption>Список админов</caption>
+        <tr>
+            <th>ID</th>
+            <th>Логин</th>
+            <th>Почта</th>
+        </tr>
+        {{#each admins as |admin|}}
+        <tr>
+            <td>{{admin.adminID}}</td>
+            <td>{{admin.adminlogin}}</a></td>
+            <td>{{admin.adminemail}}</td>
+            {{#isGreater admin.adminID "1"}}
+            <td><button onclick="delete_element(this)" id="delete-button" class="table-button" value="{{admin.adminID}}">Удалить</button></td>
+            {{/isGreater}}
+        </tr>
+        {{/each}}
+</table>
     </body>
 </html>
 <script>
@@ -23,7 +40,7 @@
         if (response.status == 400) {alert("Ошибка");return;}
         var tr = elem.closest("tr");
         tr.remove();
-    }
+    };
     function applyFilter() {
     var input, filter, table, tr, i, txtValue;
     input = document.getElementById("filter-input");
