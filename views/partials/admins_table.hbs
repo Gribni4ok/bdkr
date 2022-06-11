@@ -1,5 +1,5 @@
 <table id="table">
-    <caption>Список студентов</caption>
+    <caption>Список админов</caption>
         <tr>
             <th>ID</th>
             <th>Логин</th>
@@ -10,7 +10,9 @@
             <td>{{admin.adminID}}</td>
             <td>{{admin.adminlogin}}</a></td>
             <td>{{admin.adminemail}}</td>
+            {{#isGreater admin.adminID}}
             <td><button onclick="delete_element(this)" id="delete-button" class="table-button" value="{{admin.adminID}}">Удалить</button></td>
+            {{/isGreater}}
         </tr>
         {{/each}}
 </table>
