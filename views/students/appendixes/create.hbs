@@ -28,6 +28,8 @@ document.getElementById('create-button').onclick = async function(){
         body: JSON.stringify(temp),
         headers: {'Content-Type': 'application/json'}
     });
+     if(response.status == 400) alert("Ошибка при создании записи")
+    else alert("Запись создана успешна");
     };
     function auto_grow(element) {
         element.style.height = "5px";

@@ -45,6 +45,7 @@
         });
         const res = await response.json();
 
+        if(response.status == 400){alert("Не удалось получить данные"); return;}
         var temp = document.getElementById('teacher');
         res.teachers.forEach((teacher)=>{
             let value = teacher.teacherID;
@@ -98,5 +99,7 @@
                 body: JSON.stringify(data),
                 headers: {'Content-Type': 'application/json'}
             });
+            if(response.status == 400) alert("Ошибка при обновлении");
+            else alert("Запись обновлена успешно");
     }
 </script>

@@ -29,5 +29,7 @@ document.getElementById('create-button').onclick = async function(){
             body: JSON.stringify(data),
             headers: {'Content-Type': 'application/json'}
         });
+    if(response.status == 400) alert("Ошибка сервера");
+    else alert("Админ создан успешно");
 }
 </script>

@@ -34,12 +34,7 @@
             body: JSON.stringify(data),
             headers: {'Content-Type': 'application/json'}
         });
-        if (response.status == 200){
-            alert("Запись успешно создана");
-            return;
-        }
-        else{
-            alert("Ошибка при создании записи");
-        }
+        if (response.status == 200)alert("Запись успешно создана");
+        else alert("Ошибка при создании записи");
     }
 </script>

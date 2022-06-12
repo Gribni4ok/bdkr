@@ -122,6 +122,8 @@
             body: JSON.stringify(data),
             headers: {'Content-Type': 'application/json'}
         });
+         if(response.status == 400) alert("Ошибка при обновлении записи")
+            else alert("Запись обновлении успешна");
     };
     async function delete_element(elem){
         var id = elem.value;

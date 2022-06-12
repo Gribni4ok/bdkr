@@ -141,6 +141,8 @@
                 body: JSON.stringify(data),
                 headers: {'Content-Type': 'application/json'}
             });
+             if(response.status == 400) alert("Ошибка при обновлении записи")
+            else alert("Запись обновлена успешна");
         };
         function auto_grow(element) {
         element.style.height = "5px";
