@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <title>{{title}}</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/autosize.js/4.0.2/autosize.min.js"></script>
         <link rel="stylesheet" href="/../../css/main.css">
         <link rel="stylesheet" href="/../../css/table.css">
     </head>
@@ -26,6 +27,9 @@
     </body>
 </html>
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    autosize(document.querySelectorAll('#description'));
+    }, false);
         var flag = true;
         document.getElementById('toggle-button').onclick = async function() {
             var inputs = document.getElementsByName('input');
