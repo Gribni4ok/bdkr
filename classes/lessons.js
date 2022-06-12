@@ -1,21 +1,41 @@
 const pool = require("../js/init.js");
 
-async function getLessonsForDate(year, month){
-   let data = await pool.execute(`
-   SELECT lessons.lessonid,lessons.lessondateof, themes.themename, timings.timingbegin, timings.timingend, audiences.audiencename
-   FROM lessons
-   INNER JOIN themes
-   ON lessons.themeID = themes.themeID
-   INNER JOIN timings
-   ON lessons.timingID = timings.timingID
-   INNER JOIN audiences
-   ON lessons.audienceID = audiences.audienceID
-   WHERE Month(lessons.lessondateof) = "${month}" AND Year(lessons.lessondateof) = "${year}"
-   ORDER BY lessons.lessondateof,timings.timingbegin
- `)
-  .catch(err=>{
-     console.log(err);
- });
+async function getLessonsForDate(year, month,token){
+  var data;
+  var temp = "";
+  if(token.role == 1)
+    temp = "AND lessons.teacherID = "+token.id;
+  if(token.role == 0)
+  {
+    var clas = await pool.execute(`
+      SELECT *
+      FROM students
+      WHERE studentID = "${token.id}"
+      LIMIT 1
+    `)
+    .catch((err)=>{
+      console.log(err);
+    })
+    var id = clas[0][0].classID;
+    temp = "AND lessons.classID = "+id;
+  }
+    data = await pool.execute(`
+    SELECT lessons.lessonid,lessons.lessondateof, lessons.classID, lessons.teacherID, themes.themename, timings.timingbegin, timings.timingend, audiences.audiencename
+    FROM lessons
+    INNER JOIN themes
+    ON lessons.themeID = themes.themeID
+    INNER JOIN timings
+    ON lessons.timingID = timings.timingID
+    INNER JOIN audiences
+    ON lessons.audienceID = audiences.audienceID
+    WHERE Month(lessons.lessondateof) = "${month}" AND Year(lessons.lessondateof) = "${year}" ${temp}
+    ORDER BY lessons.lessondateof,timings.timingbegin
+  `)
+    .catch(err=>{
+      console.log(err);
+  });
+
+
  if(data == null || data[0].length == 0){
    return getEmptyMonth(year,month-1);
  }

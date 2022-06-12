@@ -3,7 +3,7 @@ const router = express.Router();
 const {getLessonsForDate} = require("../classes/lessons.js");
 const {getLessonForID, getLessonUpdateData, updateLessonForID,createLesson, deleteParameterForID, editParameters} = require("../classes/lesson.js");
 const {verifyToken, checkIfAdmin, checkIfTeacher} = require("../classes/logins.js");
-const months = require("../consts/values.js");
+const {months} = require("../consts/values.js");
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 
@@ -12,9 +12,8 @@ router.get("/lessons/lessons/:id",verifyToken, async function(request,response){
   const title = "Учебный план";
   let year = dateTimeParts[0];
   let monthnumber = dateTimeParts[1];
-  var data = await getLessonsForDate(year,monthnumber);
-  let monthname = months[monthnumber-1];
-  
+  var data = await getLessonsForDate(year,monthnumber,request.fakeToken);
+  let monthname = months[parseInt(monthnumber)-1];
   response.render("lessons/lessons.hbs",{lessons: data, month: monthname,monthnumber: monthnumber,year: year,title, token: request.fakeToken});
 });
 

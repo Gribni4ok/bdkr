@@ -75,6 +75,7 @@ async function searchAdmins(user){
     {
         var temp = {
             role:"2",
+            id: data[0][0].adminID,
             login: data[0][0].adminlogin
         }
         fakeToken = temp;
@@ -96,6 +97,7 @@ async function searchTeachers(user){
     {
         var temp = {
             role:"1",
+            id: data[0][0].teacherID,
             login: data[0][0].teacherlogin
         }
         fakeToken = temp;
@@ -117,6 +119,7 @@ async function searchStudents(user){
     {
         var temp = {
             role:"0",
+            id: data[0][0].studentID,
             login: data[0][0].studentlogin
         }
         fakeToken = temp;
