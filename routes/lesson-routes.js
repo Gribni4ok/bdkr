@@ -17,6 +17,16 @@ router.get("/lessons/lessons/:id",verifyToken, async function(request,response){
   response.render("lessons/lessons.hbs",{lessons: data, month: monthname,monthnumber: monthnumber,year: year,title, token: request.fakeToken});
 });
 
+router.get("/lessons/lessons/print/:id",verifyToken, async function(request,response){
+    let dateTimeParts= request.params.id.split(/[- :]/);
+    const title = "Учебный план";
+    let year = dateTimeParts[0];
+    let monthnumber = dateTimeParts[1];
+    var data = await getLessonsForDate(year,monthnumber,request.fakeToken);
+    let monthname = months[parseInt(monthnumber)-1];
+    response.render("lessons/print.hbs",{lessons: data, month: monthname,monthnumber: monthnumber,year: year,title, token: request.fakeToken});
+  });
+
 router.get("/lessons/create",verifyToken,checkIfAdmin, async function(request,response){
     var data = await getLessonUpdateData();
     response.render("lessons/create.hbs", {dat: data, token: request.fakeToken});

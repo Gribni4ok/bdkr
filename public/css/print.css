@@ -1,0 +1,120 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    background: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+  }
+  .create-button{
+    z-index: 10;
+    position: fixed;
+    margin-top: 80px;
+    background-color: #d4a1a1;
+    top: 0;
+    margin-left: 10%;
+    cursor: pointer;
+    width: 100px;
+    height: 40px;
+  }
+  .create-button:hover {
+    background-color: #7e6161;
+  }
+  .edit-button{
+    position: fixed;
+    margin-top: 80px;
+    background-color: #d4a1a1;
+    top: 0;
+    margin-left: 20%;
+    cursor: pointer;
+    width: 100px;
+    height: 60px;
+  }
+  .edit-button:hover {
+    background-color: #7e6161;
+  }
+  h1 {
+    text-transform: uppercase;
+  }
+  h2{
+    margin-top: 100px;
+  }
+  nav {
+    z-index: 10;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    min-height: 60px;
+    display: flex;
+    justify-content: flex-end;
+    background-color: rgba(0,0,0,0.7);
+  }
+
+  nav ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+
+  nav li {
+    list-style: none;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: #fff;
+    min-height: 60px;
+    display: block;
+    padding: 10px 20px;
+    line-height: 60px;
+  }
+  /*общие настройки сетки*/
+  .grid {
+    /*подключаем сетку*/
+    display: grid;
+    /*формируем по 4 одинаковых строки и столбца*/
+    grid-template-columns: repeat(7, 120px );
+    grid-gap: 6px;
+    grid-template-rows: repeat(6,200px);
+  } 
+
+  /*внешний вид ячеек*/
+  .grid .cell {
+    /*фоновый цвет*/
+    background-color: #bbbae7; 
+    /*скругление углов*/
+    border-radius: 3px;
+    /*расстояние от одной границы ячейки до другой*/
+    color: rgb(0, 0, 0);
+    padding: 1px;
+  }
+  .create_href, .lesson_href
+  { 
+    text-decoration: none; 
+    font-size: 10px;
+    color: black;
+  }
+  .cell-element{
+      background-color: #d4a1a1;
+      border-radius: 3px;
+    /*расстояние от одной границы ячейки до другой*/
+    margin: 3px;
+  }
+  /* Style buttons */
+.btn {
+  width: 40px;
+  height: 40px;
+  font-size: 12px;
+  background-color: #d4a1a1; 
+  color: rgb(0, 0, 0); 
+  padding: 12px 16px; /* Some padding */
+  cursor: pointer; /* Mouse pointer on hover */
+}
+
+.btn:hover {
+  background-color: #7e6161;
+}

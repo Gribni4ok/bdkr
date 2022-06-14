@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{{title}}</title>
+        <link rel="stylesheet" href="/../../css/print.css">
+    </head>
+    <body>
+        <h2>Расписание</h2>
+    <div>
+      <script>
+        var prevmonth = {{monthnumber}}-1;
+        var nextmonth = {{monthnumber}}+1;
+        var nextyear = {{year}};
+        var prevyear = {{year}};
+        if(prevmonth < 1)
+        {
+          prevmonth = 12;
+          prevyear = prevyear-1;
+        }
+        else if(nextmonth >12){
+          nextmonth = 1;
+          nextyear = nextyear+1;
+        }
+       var prev = "/lessons/lessons/"+prevyear + "-"+prevmonth;
+       var next = "/lessons/lessons/"+nextyear + "-"+nextmonth;
+      document.write(
+        '<a href="' + prev + '">Пред </a>' + "{{month}}"+ " {{year}}" + '<a href="' + next + '"> След</a>'
+        );
+      </script>
+    </div>
+    <div class="grid">
+        {{#each lessons}}
+          {{> cell data=this}} 
+        {{/each}}
+    </div>
+    </body>
+</html>
+<script>
+    window.onload = function(){
+        window.print();
+    }
+</script>
